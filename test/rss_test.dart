@@ -64,23 +64,23 @@ void main() {
     expect(feed.skipHours!.contains(3), true);
     expect(feed.skipHours!.contains(4), true);
 
-    expect(feed.items!.length, 2);
+    expect(feed.items?.length, 3);
 
     expect(feed.items!.first.title,
         'The standard Lorem Ipsum passage, used since the 1500s');
     expect(feed.items!.first.description,
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit');
-    expect(feed.items!.first.link, 'https://foo.bar.news/1');
-    expect(feed.items!.first.guid, 'https://foo.bar.news/1?guid');
-    expect(feed.items!.first.pubDate,
-        DateTime(2018, 03, 26, 14)); //Mon, 26 Mar 2018 14:00:00 PDT
-    expect(feed.items!.first.categories!.first.domain, 'news');
-    expect(feed.items!.first.categories!.first.value, 'Lorem');
-    expect(feed.items!.first.author, 'alice@foo.bar.news');
-    expect(feed.items!.first.source!.url, 'https://foo.bar.news/1?source');
-    expect(feed.items!.first.source!.value, 'Foo Bar');
-    expect(feed.items!.first.comments, 'https://foo.bar.news/1/comments');
-    expect(feed.items!.first.enclosure!.url,
+    expect(feed.items?.first.link, 'https://foo.bar.news/1');
+    expect(feed.items?.first.guid, 'https://foo.bar.news/1?guid');
+    expect(feed.items?.first.pubDate,
+        DateTime(2018, 03, 26, 14)); // Mon, 26 Mar 2018 14:00:00 PDT
+    expect(feed.items?.first.categories?.first.domain, 'news');
+    expect(feed.items?.first.categories?.first.value, 'Lorem');
+    expect(feed.items?.first.author, 'alice@foo.bar.news');
+    expect(feed.items?.first.source?.url, 'https://foo.bar.news/1?source');
+    expect(feed.items?.first.source?.value, 'Foo Bar');
+    expect(feed.items?.first.comments, 'https://foo.bar.news/1/comments');
+    expect(feed.items?.first.enclosure?.url,
         'http://www.scripting.com/mp3s/weatherReportSuite.mp3');
     expect(feed.items!.first.enclosure!.length, 12216320);
     expect(feed.items!.first.enclosure!.type, 'audio/mpeg');
@@ -88,7 +88,13 @@ void main() {
     expect(feed.items!.first.content!.value,
         '<img width="1000" height="690" src="https://test.com/image_link"/> Test content<br />');
     expect(
-        feed.items!.first.content!.images.first, 'https://test.com/image_link');
+        feed.items?.first.content?.images.first, 'https://test.com/image_link');
+
+    // DateTime without seconds, Tue, 20 Mar 2018 10:00 PDT
+    expect(feed.items?[1].pubDate, DateTime(2018, 03, 20, 10));
+
+    // Date only, Tue, 20 Mar 2018
+    expect(feed.items?[2].pubDate, DateTime(2018, 03, 20));
   });
   test('parse RSS-Media.xml', () {
     var xmlString = File('test/xml/RSS-Media.xml').readAsStringSync();
