@@ -6,6 +6,7 @@ import 'package:webfeed_revised/domain/rss_content.dart';
 import 'package:webfeed_revised/domain/rss_enclosure.dart';
 import 'package:webfeed_revised/domain/rss_source.dart';
 import 'package:webfeed_revised/util/datetime.dart';
+import 'package:webfeed_revised/util/function.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
@@ -46,7 +47,7 @@ class RssItem {
   factory RssItem.parse(XmlElement element) {
     return RssItem(
       title: element.findElements('title').firstOrNull?.text,
-      description: element.findElements('description').firstOrNull?.text,
+      description: removeHtml(element.findElements('description').firstOrNull?.text),
       link: element.findElements('link').firstOrNull?.text,
       categories: element
           .findElements('category')
