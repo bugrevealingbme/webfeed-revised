@@ -5,6 +5,7 @@ import 'package:webfeed_revised/domain/atom_source.dart';
 import 'package:webfeed_revised/domain/media/media.dart';
 import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// Represents an Atom item
@@ -28,9 +29,9 @@ class AtomItem {
   });
 
   /// Parse constructor for the AtomItem class, used when 'parsing' a feed
-  factory AtomItem.parse(XmlElement element) => AtomItem(
+  factory AtomItem.parse(XmlElement element, bool parseHtml) => AtomItem(
         id: element.findElements('id').firstOrNull?.text,
-        title: element.findElements('title').firstOrNull?.text,
+        title: element.findElements('title').firstOrNull?.parseText(parseHtml),
         updated:
             parseDateTime(element.findElements('updated').firstOrNull?.text),
         authors: element.findElements('author').map(AtomPerson.parse).toList(),
@@ -42,10 +43,12 @@ class AtomItem {
         source:
             element.findElements('source').map(AtomSource.parse).firstOrNull,
         published: element.findElements('published').firstOrNull?.text,
-        content: element.findElements('content').firstOrNull?.text,
-        summary: element.findElements('summary').firstOrNull?.text,
+        content:
+            element.findElements('content').firstOrNull?.parseText(parseHtml),
+        summary:
+            element.findElements('summary').firstOrNull?.parseText(parseHtml),
         rights: element.findElements('rights').firstOrNull?.text,
-        media: Media.parse(element),
+        media: Media.parse(element, parseHtml),
       );
 
   /// The item id

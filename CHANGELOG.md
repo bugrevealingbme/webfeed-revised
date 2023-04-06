@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.7.3](https://pub.dev/packages/webfeed-revised/versions/0.7.3)
+- Fixed html parser function
+- Adds the ability to automatically parse and replace HTML tags from some elements of the RSS feed
+
 ## [0.7.2](https://pub.dev/packages/webfeed-revised/versions/0.7.2)
 - Applied dart format
 

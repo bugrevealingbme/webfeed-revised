@@ -8,6 +8,7 @@ import 'package:webfeed_revised/domain/rss_image.dart';
 import 'package:webfeed_revised/domain/rss_item.dart';
 import 'package:webfeed_revised/domain/syndication/syndication.dart';
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// Represents an RSS feed
@@ -40,7 +41,8 @@ class RssFeed {
   });
 
   /// Parse constructor for the RssFeed class, used when 'parsing' a feed
-  factory RssFeed.parse(String xmlString) {
+  /// If [parseHtml] is true, HTML tags will be parsed from the feed
+  factory RssFeed.parse(String xmlString, [bool parseHtml = true]) {
     final document = XmlDocument.parse(xmlString);
     final rss = document.findElements('rss').firstOrNull;
     final rdf = document.findElements('rdf:RDF').firstOrNull;
@@ -52,17 +54,23 @@ class RssFeed {
       throw ArgumentError('channel not found');
     }
     return RssFeed(
-      title: channelElement.findElements('title').firstOrNull?.text,
+      title: channelElement
+          .findElements('title')
+          .firstOrNull
+          ?.parseText(parseHtml),
       author: channelElement.findElements('author').firstOrNull?.text,
-      description: channelElement.findElements('description').firstOrNull?.text,
+      description: channelElement
+          .findElements('description')
+          .firstOrNull
+          ?.parseText(parseHtml),
       link: channelElement.findElements('link').firstOrNull?.text,
       items: (rdf ?? channelElement)
           .findElements('item')
-          .map(RssItem.parse)
+          .map((item) => RssItem.parse(item, parseHtml))
           .toList(),
       image: (rdf ?? channelElement)
           .findElements('image')
-          .map(RssImage.parse)
+          .map((image) => RssImage.parse(image, parseHtml))
           .firstOrNull,
       cloud:
           channelElement.findElements('cloud').map(RssCloud.parse).firstOrNull,
@@ -97,8 +105,8 @@ class RssFeed {
       ttl: int.tryParse(
         channelElement.findElements('ttl').firstOrNull?.text ?? '0',
       ),
-      dc: DublinCore.parse(channelElement),
-      itunes: Itunes.parse(channelElement),
+      dc: DublinCore.parse(channelElement, parseHtml),
+      itunes: Itunes.parse(channelElement, parseHtml),
       syndication: Syndication.parse(channelElement),
     );
   }

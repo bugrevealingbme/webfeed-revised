@@ -1,3 +1,4 @@
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// The text of a media element
@@ -13,12 +14,12 @@ class Text {
   });
 
   /// Parse constructor for the Text class, used when 'parsing' a feed
-  factory Text.parse(XmlElement element) => Text(
+  factory Text.parse(XmlElement element, bool parseHtml) => Text(
         type: element.getAttribute('type'),
         lang: element.getAttribute('lang'),
         start: element.getAttribute('start'),
         end: element.getAttribute('end'),
-        value: element.text,
+        value: element.parseText(parseHtml),
       );
 
   /// The type of the text

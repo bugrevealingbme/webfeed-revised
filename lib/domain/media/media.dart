@@ -56,7 +56,7 @@ class Media {
   });
 
   /// Parse constructor for the Media class, used when 'parsing' a feed
-  factory Media.parse(XmlElement element) => Media(
+  factory Media.parse(XmlElement element, bool parseHtml) => Media(
         group: element.findElements('media:group').map(Group.parse).firstOrNull,
         contents:
             element.findElements('media:content').map(Content.parse).toList(),
@@ -68,8 +68,9 @@ class Media {
             .firstOrNull,
         rating:
             element.findElements('media:rating').map(Rating.parse).firstOrNull,
-        title:
-            findElements(element, 'media:title')?.map(Title.parse).firstOrNull,
+        title: findElements(element, 'media:title')
+            ?.map((title) => Title.parse(title, parseHtml))
+            .firstOrNull,
         description: element
             .findElements('media:description')
             .map(Description.parse)
@@ -86,7 +87,10 @@ class Media {
             .findElements('media:copyright')
             .map(Copyright.parse)
             .firstOrNull,
-        text: element.findElements('media:text').map(Text.parse).firstOrNull,
+        text: element
+            .findElements('media:text')
+            .map((text) => Text.parse(text, parseHtml))
+            .firstOrNull,
         restriction: element
             .findElements('media:restriction')
             .map(Restriction.parse)
@@ -99,7 +103,7 @@ class Media {
                 .findElements('media:comments')
                 .firstOrNull
                 ?.findElements('media:comment')
-                .map((e) => e.text)
+                .map((e) => e.parseText(parseHtml))
                 .toList() ??
             [],
         embed: element.findElements('media:embed').map(Embed.parse).firstOrNull,
@@ -107,7 +111,7 @@ class Media {
                 .findElements('media:responses')
                 .firstOrNull
                 ?.findElements('media:response')
-                .map((e) => e.text)
+                .map((e) => e.parseText(parseHtml))
                 .toList() ??
             [],
         backLinks: element
@@ -134,7 +138,7 @@ class Media {
                 .findElements('media:scenes')
                 .firstOrNull
                 ?.findElements('media:scene')
-                .map(Scene.parse)
+                .map((item) => Scene.parse(item, parseHtml))
                 .toList() ??
             [],
       );

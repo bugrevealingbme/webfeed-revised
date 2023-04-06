@@ -20,7 +20,7 @@ Forked from [WebFeed - V0.7.0](https://pub.dev/packages/webfeed) and improved up
 
 Add this line into your `pubspec.yaml`
 ```
-webfeed_revised: ^0.7.2
+webfeed_revised: ^0.7.3
 ```
 
 Import the package into your dart code using:
@@ -30,10 +30,16 @@ import 'package:webfeed_revised/webfeed_revised.dart';
 
 ### Example
 
-To parse string into `RssFeed` object use:
+To parse string into `RssFeed` object, use:
 ```
 var rssFeed = RssFeed.parse(xmlString); // for parsing RSS feed
 var atomFeed = AtomFeed.parse(xmlString); // for parsing Atom feed
+```
+
+To parse string into `RssFeed` object without automatic HTML parsing, use:
+```
+var rssFeed = RssFeed.parse(xmlString, false); // for parsing RSS feed
+var atomFeed = AtomFeed.parse(xmlString, false); // for parsing Atom feed
 ```
 
 ### Preview

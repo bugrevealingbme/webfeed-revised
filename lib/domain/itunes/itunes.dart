@@ -32,7 +32,7 @@ class Itunes {
   });
 
   /// Parse constructor for the Itunes class, used when 'parsing' a feed
-  factory Itunes.parse(XmlElement element) {
+  factory Itunes.parse(XmlElement element, bool parseHtml) {
     final episodeStr =
         element.findElements('itunes:episode').firstOrNull?.text ?? '';
     final seasonStr =
@@ -41,10 +41,19 @@ class Itunes {
         element.findElements('itunes:duration').firstOrNull?.text ?? '';
     return Itunes(
       author: element.findElements('itunes:author').firstOrNull?.text,
-      summary: element.findElements('itunes:summary').firstOrNull?.text,
+      summary: element
+          .findElements('itunes:summary')
+          .firstOrNull
+          ?.parseText(parseHtml),
       explicit: parseBoolLiteral(element, 'itunes:explicit'),
-      title: element.findElements('itunes:title').firstOrNull?.text,
-      subtitle: element.findElements('itunes:subtitle').firstOrNull?.text,
+      title: element
+          .findElements('itunes:title')
+          .firstOrNull
+          ?.parseText(parseHtml),
+      subtitle: element
+          .findElements('itunes:subtitle')
+          .firstOrNull
+          ?.parseText(parseHtml),
       owner: element
           .findElements('itunes:owner')
           .map(ItunesOwner.parse)

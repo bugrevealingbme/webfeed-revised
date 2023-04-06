@@ -1,7 +1,6 @@
 /// Returns a string with HTML tags removed and replaced with their Dart
 /// equivalent
-String? removeHtml(String? input) {
-  if (input == null) return null;
+String removeHtml(String input) {
   // Define a regular expression pattern that matches HTML tags
   final exp = RegExp('<[^>]*>');
 
@@ -35,5 +34,5 @@ String? removeHtml(String? input) {
   }
 
   // Return the resulting string
-  return input;
+  return parsedString;
 }

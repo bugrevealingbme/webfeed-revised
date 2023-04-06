@@ -5,6 +5,7 @@ import 'package:webfeed_revised/domain/atom_link.dart';
 import 'package:webfeed_revised/domain/atom_person.dart';
 import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// Represents an Atom feed
@@ -28,7 +29,8 @@ class AtomFeed {
   });
 
   /// Parse constructor for the AtomFeed class, used when 'parsing' a feed
-  factory AtomFeed.parse(String xmlString) {
+  /// If [parseHtml] is true, HTML tags will be parsed from the feed
+  factory AtomFeed.parse(String xmlString, [bool parseHtml = true]) {
     final document = XmlDocument.parse(xmlString);
     final feedElement = document.findElements('feed').firstOrNull;
     if (feedElement == null) {
@@ -37,10 +39,15 @@ class AtomFeed {
 
     return AtomFeed(
       id: feedElement.findElements('id').firstOrNull?.text,
-      title: feedElement.findElements('title').firstOrNull?.text,
-      updated:
-          parseDateTime(feedElement.findElements('updated').firstOrNull?.text),
-      items: feedElement.findElements('entry').map(AtomItem.parse).toList(),
+      title:
+          feedElement.findElements('title').firstOrNull?.parseText(parseHtml),
+      updated: parseDateTime(
+        feedElement.findElements('updated').firstOrNull?.text,
+      ),
+      items: feedElement
+          .findElements('entry')
+          .map((item) => AtomItem.parse(item, parseHtml))
+          .toList(),
       links: feedElement.findElements('link').map(AtomLink.parse).toList(),
       authors:
           feedElement.findElements('author').map(AtomPerson.parse).toList(),
@@ -57,7 +64,10 @@ class AtomFeed {
       icon: feedElement.findElements('icon').firstOrNull?.text,
       logo: feedElement.findElements('logo').firstOrNull?.text,
       rights: feedElement.findElements('rights').firstOrNull?.text,
-      subtitle: feedElement.findElements('subtitle').firstOrNull?.text,
+      subtitle: feedElement
+          .findElements('subtitle')
+          .firstOrNull
+          ?.parseText(parseHtml),
     );
   }
 

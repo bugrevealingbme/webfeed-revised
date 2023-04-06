@@ -1,4 +1,5 @@
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// The image of a RSS feed
@@ -8,8 +9,8 @@ class RssImage {
   RssImage({this.title, this.url, this.link});
 
   /// Parse constructor for the RssImage class, used when 'parsing' a feed
-  factory RssImage.parse(XmlElement element) => RssImage(
-        title: element.findElements('title').firstOrNull?.text,
+  factory RssImage.parse(XmlElement element, bool parseHtml) => RssImage(
+        title: element.findElements('title').firstOrNull?.parseText(parseHtml),
         url: element.findElements('url').firstOrNull?.text,
         link: element.findElements('link').firstOrNull?.text,
       );

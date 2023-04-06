@@ -1,5 +1,6 @@
 import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// The Dublin Core Metadata Element Set
@@ -27,16 +28,26 @@ class DublinCore {
   });
 
   /// Parse constructor for the DublinCore class, used when 'parsing' a feed
-  factory DublinCore.parse(XmlElement element) => DublinCore(
-        title: element.findElements('dc:title').firstOrNull?.text,
-        description: element.findElements('dc:description').firstOrNull?.text,
+  factory DublinCore.parse(XmlElement element, bool parseHtml) => DublinCore(
+        title:
+            element.findElements('dc:title').firstOrNull?.parseText(parseHtml),
+        description: element
+            .findElements('dc:description')
+            .firstOrNull
+            ?.parseText(parseHtml),
         creator: element.findElements('dc:creator').firstOrNull?.text,
-        subject: element.findElements('dc:subject').firstOrNull?.text,
+        subject: element
+            .findElements('dc:subject')
+            .firstOrNull
+            ?.parseText(parseHtml),
         publisher: element.findElements('dc:publisher').firstOrNull?.text,
         contributor: element.findElements('dc:contributor').firstOrNull?.text,
-        date: parseDateTime(element.findElements('dc:date').firstOrNull?.text),
-        created:
-            parseDateTime(element.findElements('dc:created').firstOrNull?.text),
+        date: parseDateTime(
+          element.findElements('dc:date').firstOrNull?.text,
+        ),
+        created: parseDateTime(
+          element.findElements('dc:created').firstOrNull?.text,
+        ),
         modified: parseDateTime(
           element.findElements('dc:modified').firstOrNull?.text,
         ),

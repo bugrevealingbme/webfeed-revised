@@ -1,8 +1,18 @@
 import 'dart:core';
 import 'dart:developer';
 
+import 'package:webfeed_revised/util/function.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
+
+/// An extension on [XmlHasText] that adds a [parseText] method to simplify
+/// parsing HTML
+extension XmlTextParser on XmlElement {
+  /// Convenience method to simplify parsing HTML based on the [parseHtml]
+  /// parameter
+  String parseText(bool parseHtml) =>
+      parseHtml ? removeHtml(innerText) : innerText;
+}
 
 /// Finds the elements with the given [name] in the given [node]
 Iterable<XmlElement>? findElements(

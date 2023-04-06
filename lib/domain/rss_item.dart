@@ -6,8 +6,8 @@ import 'package:webfeed_revised/domain/rss_content.dart';
 import 'package:webfeed_revised/domain/rss_enclosure.dart';
 import 'package:webfeed_revised/domain/rss_source.dart';
 import 'package:webfeed_revised/util/datetime.dart';
-import 'package:webfeed_revised/util/function.dart';
 import 'package:webfeed_revised/util/iterable.dart';
+import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
 /// Represents an RSS item
@@ -32,30 +32,34 @@ class RssItem {
   });
 
   /// Parse constructor for the RssItem class, used when 'parsing' a feed
-  factory RssItem.parse(XmlElement element) => RssItem(
-        title: element.findElements('title').firstOrNull?.text,
-        description:
-            removeHtml(element.findElements('description').firstOrNull?.text),
+  factory RssItem.parse(XmlElement element, bool parseHtml) => RssItem(
+        title: element.findElements('title').firstOrNull?.parseText(parseHtml),
+        description: element
+            .findElements('description')
+            .firstOrNull
+            ?.parseText(parseHtml),
         link: element.findElements('link').firstOrNull?.text,
         categories:
             element.findElements('category').map(RssCategory.parse).toList(),
         guid: element.findElements('guid').firstOrNull?.text,
-        pubDate:
-            parseDateTime(element.findElements('pubDate').firstOrNull?.text),
+        pubDate: parseDateTime(
+          element.findElements('pubDate').firstOrNull?.text,
+        ),
         author: element.findElements('author').firstOrNull?.text,
-        comments: element.findElements('comments').firstOrNull?.text,
+        comments:
+            element.findElements('comments').firstOrNull?.parseText(parseHtml),
         source: element.findElements('source').map(RssSource.parse).firstOrNull,
         content: element
             .findElements('content:encoded')
             .map(RssContent.parse)
             .firstOrNull,
-        media: Media.parse(element),
+        media: Media.parse(element, parseHtml),
         enclosure: element
             .findElements('enclosure')
             .map(RssEnclosure.parse)
             .firstOrNull,
-        dc: DublinCore.parse(element),
-        itunes: Itunes.parse(element),
+        dc: DublinCore.parse(element, parseHtml),
+        itunes: Itunes.parse(element, parseHtml),
       );
 
   /// The title of the item
