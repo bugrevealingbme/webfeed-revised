@@ -2,19 +2,30 @@ import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
-enum SyndicationUpdatePeriod { hourly, daily, weekly, monthly, yearly }
+/// Type of update period
+enum SyndicationUpdatePeriod {
+  /// Hourly update period
+  hourly,
+  /// Daily update period
+  daily,
+  /// Weekly update period
+  weekly,
+  /// Monthly update period
+  monthly,
+  /// Yearly update period
+  yearly
+}
 
+/// Syndication information
 class Syndication {
-  final SyndicationUpdatePeriod? updatePeriod;
-  final int? updateFrequency;
-  final DateTime? updateBase;
-
+  /// Default constructor for the Syndication class
   Syndication({
     this.updatePeriod,
     this.updateFrequency,
     this.updateBase,
   });
 
+  /// Parse constructor for the Syndication class, used when 'parsing' a feed
   factory Syndication.parse(XmlElement element) {
     SyndicationUpdatePeriod updatePeriod;
     switch (element.findElements('sy:updatePeriod').firstOrNull?.text) {
@@ -40,9 +51,16 @@ class Syndication {
     return Syndication(
       updatePeriod: updatePeriod,
       updateFrequency: int.tryParse(
-          element.findElements('sy:updateFrequency').firstOrNull?.text ?? '1'),
+          element.findElements('sy:updateFrequency').firstOrNull?.text ?? '1',),
       updateBase: parseDateTime(
-          element.findElements('sy:updateBase').firstOrNull?.text),
+          element.findElements('sy:updateBase').firstOrNull?.text,),
     );
   }
+
+  /// The update period
+  final SyndicationUpdatePeriod? updatePeriod;
+  /// The update frequency
+  final int? updateFrequency;
+  /// The update base
+  final DateTime? updateBase;
 }

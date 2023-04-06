@@ -7,25 +7,10 @@ import 'package:webfeed_revised/util/iterable.dart';
 import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
+/// The iTunes specific feed information
+/// See https://help.apple.com/itc/podcasts_connect/#/itcb54353390
 class Itunes {
-  final String? author;
-  final String? summary;
-  final bool? explicit;
-  final String? title;
-  final String? subtitle;
-  final ItunesOwner? owner;
-  final List<String>? keywords;
-  final ItunesImage? image;
-  final List<ItunesCategory>? categories;
-  final ItunesType? type;
-  final String? newFeedUrl;
-  final bool? block;
-  final bool? complete;
-  final int? episode;
-  final int? season;
-  final Duration? duration;
-  final ItunesEpisodeType? episodeType;
-
+  /// Default constructor for the Itunes class
   Itunes({
     this.author,
     this.summary,
@@ -46,6 +31,7 @@ class Itunes {
     this.episodeType,
   });
 
+  /// Parse constructor for the Itunes class, used when 'parsing' a feed
   factory Itunes.parse(XmlElement element) {
     final episodeStr =
         element.findElements('itunes:episode').firstOrNull?.text ?? '';
@@ -61,7 +47,7 @@ class Itunes {
       subtitle: element.findElements('itunes:subtitle').firstOrNull?.text,
       owner: element
           .findElements('itunes:owner')
-          .map((e) => ItunesOwner.parse(e))
+          .map(ItunesOwner.parse)
           .firstOrNull,
       keywords: element
               .findElements('itunes:keywords')
@@ -73,15 +59,15 @@ class Itunes {
           [],
       image: element
           .findElements('itunes:image')
-          .map((e) => ItunesImage.parse(e))
+          .map(ItunesImage.parse)
           .firstOrNull,
       categories: element
           .findElements('itunes:category')
-          .map((e) => ItunesCategory.parse(e))
+          .map(ItunesCategory.parse)
           .toList(),
       type: element
           .findElements('itunes:type')
-          .map((e) => newItunesType(e))
+          .map(newItunesType)
           .firstOrNull,
       newFeedUrl: element.findElements('itunes:new-feed-url').firstOrNull?.text,
       block: parseBoolLiteral(element, 'itunes:block'),
@@ -91,16 +77,51 @@ class Itunes {
       duration: durationStr.isNotEmpty ? _parseDuration(durationStr) : null,
       episodeType: element
           .findElements('itunes:episodeType')
-          .map((e) => newItunesEpisodeType(e))
+          .map(newItunesEpisodeType)
           .firstOrNull,
     );
   }
+
+  /// The author of the podcast
+  final String? author;
+  /// The summary of the podcast
+  final String? summary;
+  /// Whether the podcast is explicit or not
+  final bool? explicit;
+  /// The title of the podcast
+  final String? title;
+  /// The subtitle of the podcast
+  final String? subtitle;
+  /// The podcast owner contact information
+  final ItunesOwner? owner;
+  /// The keywords of the podcast
+  final List<String>? keywords;
+  /// The image of the podcast
+  final ItunesImage? image;
+  /// The categories of the podcast
+  final List<ItunesCategory>? categories;
+  /// The type of the podcast
+  final ItunesType? type;
+  /// The new feed url of the podcast
+  final String? newFeedUrl;
+  /// Whether the podcast is blocked or not
+  final bool? block;
+  /// Whether the podcast is complete or not
+  final bool? complete;
+  /// The episode number of the podcast
+  final int? episode;
+  /// The season number of the podcast
+  final int? season;
+  /// The duration of the podcast
+  final Duration? duration;
+  /// The episode type of the podcast
+  final ItunesEpisodeType? episodeType;
 
   static Duration _parseDuration(String s) {
     var hours = 0;
     var minutes = 0;
     var seconds = 0;
-    var parts = s.split(':');
+    final parts = s.split(':');
     if (parts.length > 2) {
       hours = int.tryParse(parts[parts.length - 3]) ?? 0;
     }

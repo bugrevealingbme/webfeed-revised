@@ -23,33 +23,10 @@ import 'package:webfeed_revised/util/iterable.dart';
 import 'package:webfeed_revised/util/xml.dart';
 import 'package:xml/xml.dart';
 
+/// The Media element
+/// See https://www.rssboard.org/media-rss
 class Media {
-  final Group? group;
-  final List<Content>? contents;
-  final List<Credit>? credits;
-  final Category? category;
-  final Rating? rating;
-  final Title? title;
-  final Description? description;
-  final String? keywords;
-  final List<Thumbnail>? thumbnails;
-  final Hash? hash;
-  final Player? player;
-  final Copyright? copyright;
-  final Text? text;
-  final Restriction? restriction;
-  final Community? community;
-  final List<String>? comments;
-  final Embed? embed;
-  final List<String>? responses;
-  final List<String>? backLinks;
-  final Status? status;
-  final List<Price>? prices;
-  final License? license;
-  final PeerLink? peerLink;
-  final Rights? rights;
-  final List<Scene>? scenes;
-
+  /// Default constructor for the Media class
   Media({
     this.group,
     this.contents,
@@ -78,63 +55,63 @@ class Media {
     this.scenes,
   });
 
-  factory Media.parse(XmlElement element) {
-    return Media(
+  /// Parse constructor for the Media class, used when 'parsing' a feed
+  factory Media.parse(XmlElement element) => Media(
       group: element
           .findElements('media:group')
-          .map((e) => Group.parse(e))
+          .map(Group.parse)
           .firstOrNull,
       contents: element
           .findElements('media:content')
-          .map((e) => Content.parse(e))
+          .map(Content.parse)
           .toList(),
       credits: element
           .findElements('media:credit')
-          .map((e) => Credit.parse(e))
+          .map(Credit.parse)
           .toList(),
       category: element
           .findElements('media:category')
-          .map((e) => Category.parse(e))
+          .map(Category.parse)
           .firstOrNull,
       rating: element
           .findElements('media:rating')
-          .map((e) => Rating.parse(e))
+          .map(Rating.parse)
           .firstOrNull,
       title: findElements(element, 'media:title')
-          ?.map((e) => Title.parse(e))
+          ?.map(Title.parse)
           .firstOrNull,
       description: element
           .findElements('media:description')
-          .map((e) => Description.parse(e))
+          .map(Description.parse)
           .firstOrNull,
       keywords: element.findElements('media:keywords').firstOrNull?.text,
       thumbnails: element
           .findElements('media:thumbnail')
-          .map((e) => Thumbnail.parse(e))
+          .map(Thumbnail.parse)
           .toList(),
       hash: element
           .findElements('media:hash')
-          .map((e) => Hash.parse(e))
+          .map(Hash.parse)
           .firstOrNull,
       player: element
           .findElements('media:player')
-          .map((e) => Player.parse(e))
+          .map(Player.parse)
           .firstOrNull,
       copyright: element
           .findElements('media:copyright')
-          .map((e) => Copyright.parse(e))
+          .map(Copyright.parse)
           .firstOrNull,
       text: element
           .findElements('media:text')
-          .map((e) => Text.parse(e))
+          .map(Text.parse)
           .firstOrNull,
       restriction: element
           .findElements('media:restriction')
-          .map((e) => Restriction.parse(e))
+          .map(Restriction.parse)
           .firstOrNull,
       community: element
           .findElements('media:community')
-          .map((e) => Community.parse(e))
+          .map(Community.parse)
           .firstOrNull,
       comments: element
               .findElements('media:comments')
@@ -145,7 +122,7 @@ class Media {
           [],
       embed: element
           .findElements('media:embed')
-          .map((e) => Embed.parse(e))
+          .map(Embed.parse)
           .firstOrNull,
       responses: element
               .findElements('media:responses')
@@ -163,31 +140,81 @@ class Media {
           [],
       status: element
           .findElements('media:status')
-          .map((e) => Status.parse(e))
+          .map(Status.parse)
           .firstOrNull,
       prices: element
           .findElements('media:price')
-          .map((e) => Price.parse(e))
+          .map(Price.parse)
           .toList(),
       license: element
           .findElements('media:license')
-          .map((e) => License.parse(e))
+          .map(License.parse)
           .firstOrNull,
       peerLink: element
           .findElements('media:peerLink')
-          .map((e) => PeerLink.parse(e))
+          .map(PeerLink.parse)
           .firstOrNull,
       rights: element
           .findElements('media:rights')
-          .map((e) => Rights.parse(e))
+          .map(Rights.parse)
           .firstOrNull,
       scenes: element
               .findElements('media:scenes')
               .firstOrNull
               ?.findElements('media:scene')
-              .map((e) => Scene.parse(e))
+              .map(Scene.parse)
               .toList() ??
           [],
     );
-  }
+
+  /// The group of the media element
+  final Group? group;
+  /// The contents of the media element
+  final List<Content>? contents;
+  /// The credits of the media element
+  final List<Credit>? credits;
+  /// The category of the media element
+  final Category? category;
+  /// The rating of the media element
+  final Rating? rating;
+  /// The title of the media element
+  final Title? title;
+  /// The description of the media element
+  final Description? description;
+  /// The keywords of the media element
+  final String? keywords;
+  /// The thumbnails of the media element
+  final List<Thumbnail>? thumbnails;
+  /// The hash of the media element
+  final Hash? hash;
+  /// The player of the media element
+  final Player? player;
+  /// The copyright of the media element
+  final Copyright? copyright;
+  /// The text of the media element
+  final Text? text;
+  /// The restriction of the media element
+  final Restriction? restriction;
+  /// The community of the media element
+  final Community? community;
+  /// The comments of the media element
+  final List<String>? comments;
+  /// The embed of the media element
+  final Embed? embed;
+  /// The responses of the media element
+  final List<String>? responses;
+  /// The backLinks of the media element
+  final List<String>? backLinks;
+  /// The status of the media element
+  final Status? status;
+  /// The prices of the media element
+  final List<Price>? prices;
+  /// The license of the media element
+  final License? license;
+  /// The peerLink of the media element
+  final PeerLink? peerLink;
+  /// The rights of the media element
+  final Rights? rights;
+  /// The scenes of the media element
+  final List<Scene>? scenes;
 }

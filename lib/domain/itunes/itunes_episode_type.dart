@@ -1,7 +1,19 @@
 import 'package:xml/xml.dart';
 
-enum ItunesEpisodeType { full, trailer, bonus, unknown }
+/// Different types of Episodes in the Itunes RSS specification.
+/// See https://help.apple.com/itc/podcasts_connect/#/itcb54353390
+enum ItunesEpisodeType {
+  /// The default type, used when submitting the complete content of a show.
+  full,
+  /// Used when submitting a short, promotional piece of content
+  trailer,
+  /// Used when submitting extra content for a show.
+  bonus,
+  /// A fallback type.
+  unknown
+}
 
+/// Parses the [element] text to a ItunesEpisodeType
 ItunesEpisodeType newItunesEpisodeType(XmlElement element) {
   switch (element.text) {
     case 'full':

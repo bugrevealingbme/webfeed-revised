@@ -1,21 +1,26 @@
 import 'package:xml/xml.dart';
 
+/// The license of a feed
+/// See https://www.rssboard.org/media-rss#media-license
 class License {
-  final String? type;
-  final String? href;
-  final String? value;
-
+  /// Default constructor for the License class
   License({
     this.type,
     this.href,
     this.value,
   });
 
-  factory License.parse(XmlElement element) {
-    return License(
+  /// Parse constructor for the License class, used when 'parsing' a feed
+  factory License.parse(XmlElement element) => License(
       type: element.getAttribute('type'),
       href: element.getAttribute('href'),
       value: element.text,
     );
-  }
+
+  /// The type of the license
+  final String? type;
+  /// The href of the license
+  final String? href;
+  /// The value of the license
+  final String? value;
 }

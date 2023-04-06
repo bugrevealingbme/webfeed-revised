@@ -7,22 +7,11 @@ import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
+/// Represents an Atom item
+/// See https://tools.ietf.org/html/rfc4287
 class AtomItem {
-  final String? id;
-  final String? title;
-  final DateTime? updated;
 
-  final List<AtomPerson>? authors;
-  final List<AtomLink>? links;
-  final List<AtomCategory>? categories;
-  final List<AtomPerson>? contributors;
-  final AtomSource? source;
-  final String? published;
-  final String? content;
-  final String? summary;
-  final String? rights;
-  final Media? media;
-
+  /// Default constructor for the AtomItem class
   AtomItem({
     this.id,
     this.title,
@@ -39,28 +28,28 @@ class AtomItem {
     this.media,
   });
 
-  factory AtomItem.parse(XmlElement element) {
-    return AtomItem(
+  /// Parse constructor for the AtomItem class, used when 'parsing' a feed
+  factory AtomItem.parse(XmlElement element) => AtomItem(
       id: element.findElements('id').firstOrNull?.text,
       title: element.findElements('title').firstOrNull?.text,
       updated: parseDateTime(element.findElements('updated').firstOrNull?.text),
       authors: element
           .findElements('author')
-          .map((e) => AtomPerson.parse(e))
+          .map(AtomPerson.parse)
           .toList(),
       links:
-          element.findElements('link').map((e) => AtomLink.parse(e)).toList(),
+          element.findElements('link').map(AtomLink.parse).toList(),
       categories: element
           .findElements('category')
-          .map((e) => AtomCategory.parse(e))
+          .map(AtomCategory.parse)
           .toList(),
       contributors: element
           .findElements('contributor')
-          .map((e) => AtomPerson.parse(e))
+          .map(AtomPerson.parse)
           .toList(),
       source: element
           .findElements('source')
-          .map((e) => AtomSource.parse(e))
+          .map(AtomSource.parse)
           .firstOrNull,
       published: element.findElements('published').firstOrNull?.text,
       content: element.findElements('content').firstOrNull?.text,
@@ -68,5 +57,31 @@ class AtomItem {
       rights: element.findElements('rights').firstOrNull?.text,
       media: Media.parse(element),
     );
-  }
+
+  /// The item id
+  final String? id;
+  /// The item title
+  final String? title;
+  /// The item updated date
+  final DateTime? updated;
+  /// The item authors
+  final List<AtomPerson>? authors;
+  /// The item links
+  final List<AtomLink>? links;
+  /// The item categories
+  final List<AtomCategory>? categories;
+  /// The item contributors
+  final List<AtomPerson>? contributors;
+  /// The item source
+  final AtomSource? source;
+  /// The item published date
+  final String? published;
+  /// The item content
+  final String? content;
+  /// The item summary
+  final String? summary;
+  /// The item rights
+  final String? rights;
+  /// The item media
+  final Media? media;
 }

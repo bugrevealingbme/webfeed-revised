@@ -10,23 +10,10 @@ import 'package:webfeed_revised/util/function.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
+/// Represents an RSS item
+/// See https://www.rssboard.org/rss-specification#hrelementsOfLtitemgt
 class RssItem {
-  final String? title;
-  final String? description;
-  final String? link;
-
-  final List<RssCategory>? categories;
-  final String? guid;
-  final DateTime? pubDate;
-  final String? author;
-  final String? comments;
-  final RssSource? source;
-  final RssContent? content;
-  final Media? media;
-  final RssEnclosure? enclosure;
-  final DublinCore? dc;
-  final Itunes? itunes;
-
+  /// Default constructor for the RssItem class
   RssItem({
     this.title,
     this.description,
@@ -44,34 +31,59 @@ class RssItem {
     this.itunes,
   });
 
-  factory RssItem.parse(XmlElement element) {
-    return RssItem(
-      title: element.findElements('title').firstOrNull?.text,
-      description: removeHtml(element.findElements('description').firstOrNull?.text),
-      link: element.findElements('link').firstOrNull?.text,
-      categories: element
-          .findElements('category')
-          .map((e) => RssCategory.parse(e))
-          .toList(),
-      guid: element.findElements('guid').firstOrNull?.text,
-      pubDate: parseDateTime(element.findElements('pubDate').firstOrNull?.text),
-      author: element.findElements('author').firstOrNull?.text,
-      comments: element.findElements('comments').firstOrNull?.text,
-      source: element
-          .findElements('source')
-          .map((e) => RssSource.parse(e))
-          .firstOrNull,
-      content: element
-          .findElements('content:encoded')
-          .map((e) => RssContent.parse(e))
-          .firstOrNull,
-      media: Media.parse(element),
-      enclosure: element
-          .findElements('enclosure')
-          .map((e) => RssEnclosure.parse(e))
-          .firstOrNull,
-      dc: DublinCore.parse(element),
-      itunes: Itunes.parse(element),
-    );
-  }
+  /// Parse constructor for the RssItem class, used when 'parsing' a feed
+  factory RssItem.parse(XmlElement element) => RssItem(
+        title: element.findElements('title').firstOrNull?.text,
+        description:
+            removeHtml(element.findElements('description').firstOrNull?.text),
+        link: element.findElements('link').firstOrNull?.text,
+        categories:
+            element.findElements('category').map(RssCategory.parse).toList(),
+        guid: element.findElements('guid').firstOrNull?.text,
+        pubDate:
+            parseDateTime(element.findElements('pubDate').firstOrNull?.text),
+        author: element.findElements('author').firstOrNull?.text,
+        comments: element.findElements('comments').firstOrNull?.text,
+        source: element.findElements('source').map(RssSource.parse).firstOrNull,
+        content: element
+            .findElements('content:encoded')
+            .map(RssContent.parse)
+            .firstOrNull,
+        media: Media.parse(element),
+        enclosure: element
+            .findElements('enclosure')
+            .map(RssEnclosure.parse)
+            .firstOrNull,
+        dc: DublinCore.parse(element),
+        itunes: Itunes.parse(element),
+      );
+
+  /// The title of the item
+  final String? title;
+  /// The description of the item
+  final String? description;
+  /// The link of the item
+  final String? link;
+  /// The categories of the item
+  final List<RssCategory>? categories;
+  /// The guid of the item
+  final String? guid;
+  /// The publishing date of the item
+  final DateTime? pubDate;
+  /// The author of the item
+  final String? author;
+  /// The comments of the item
+  final String? comments;
+  /// The source of the item
+  final RssSource? source;
+  /// The content of the item
+  final RssContent? content;
+  /// The media of the item
+  final Media? media;
+  /// The enclosure of the item
+  final RssEnclosure? enclosure;
+  /// The DublinCore of the item
+  final DublinCore? dc;
+  /// The Itunes of the item
+  final Itunes? itunes;
 }

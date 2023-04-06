@@ -7,22 +7,10 @@ import 'package:webfeed_revised/util/datetime.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
+/// Represents an Atom feed
+/// See https://tools.ietf.org/html/rfc4287
 class AtomFeed {
-  final String? id;
-  final String? title;
-  final DateTime? updated;
-  final List<AtomItem>? items;
-
-  final List<AtomLink>? links;
-  final List<AtomPerson>? authors;
-  final List<AtomPerson>? contributors;
-  final List<AtomCategory>? categories;
-  final AtomGenerator? generator;
-  final String? icon;
-  final String? logo;
-  final String? rights;
-  final String? subtitle;
-
+  /// Default constructor for the AtomFeed class
   AtomFeed({
     this.id,
     this.title,
@@ -39,9 +27,10 @@ class AtomFeed {
     this.subtitle,
   });
 
+  /// Parse constructor for the AtomFeed class, used when 'parsing' a feed
   factory AtomFeed.parse(String xmlString) {
-    var document = XmlDocument.parse(xmlString);
-    var feedElement = document.findElements('feed').firstOrNull;
+    final document = XmlDocument.parse(xmlString);
+    final feedElement = document.findElements('feed').firstOrNull;
     if (feedElement == null) {
       throw ArgumentError('feed not found');
     }
@@ -53,27 +42,27 @@ class AtomFeed {
           parseDateTime(feedElement.findElements('updated').firstOrNull?.text),
       items: feedElement
           .findElements('entry')
-          .map((e) => AtomItem.parse(e))
+          .map(AtomItem.parse)
           .toList(),
       links: feedElement
           .findElements('link')
-          .map((e) => AtomLink.parse(e))
+          .map(AtomLink.parse)
           .toList(),
       authors: feedElement
           .findElements('author')
-          .map((e) => AtomPerson.parse(e))
+          .map(AtomPerson.parse)
           .toList(),
       contributors: feedElement
           .findElements('contributor')
-          .map((e) => AtomPerson.parse(e))
+          .map(AtomPerson.parse)
           .toList(),
       categories: feedElement
           .findElements('category')
-          .map((e) => AtomCategory.parse(e))
+          .map(AtomCategory.parse)
           .toList(),
       generator: feedElement
           .findElements('generator')
-          .map((e) => AtomGenerator.parse(e))
+          .map(AtomGenerator.parse)
           .firstOrNull,
       icon: feedElement.findElements('icon').firstOrNull?.text,
       logo: feedElement.findElements('logo').firstOrNull?.text,
@@ -81,4 +70,31 @@ class AtomFeed {
       subtitle: feedElement.findElements('subtitle').firstOrNull?.text,
     );
   }
+
+  /// The feed id
+  final String? id;
+  /// The feed title
+  final String? title;
+  /// The feed updated date
+  final DateTime? updated;
+  /// The feed items
+  final List<AtomItem>? items;
+  /// The feed links
+  final List<AtomLink>? links;
+  /// The feed authors
+  final List<AtomPerson>? authors;
+  /// The feed contributors
+  final List<AtomPerson>? contributors;
+  /// The feed categories
+  final List<AtomCategory>? categories;
+  /// The feed generator
+  final AtomGenerator? generator;
+  /// The feed icon
+  final String? icon;
+  /// The feed logo
+  final String? logo;
+  /// The feed rights
+  final String? rights;
+  /// The feed subtitle
+  final String? subtitle;
 }

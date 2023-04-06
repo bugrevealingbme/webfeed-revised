@@ -1,25 +1,30 @@
 import 'package:intl/intl.dart';
 
+/// [DateTime] format based on the RFC 822 specification
 const rfc822DatePattern = 'EEE, dd MMM yyyy HH:mm:ss Z';
+/// [DateTime] format based on the RFC 822 specification without seconds
 const rfc822DateWithoutSecondsPattern = 'EEE, dd MMM yyyy HH:mm Z';
+/// [DateTime] format based on the RFC 822 specification without time
 const rfc822DateOnlyPattern = 'EEE, dd MMM yyyy';
 
-DateTime? parseDateTime(dateString) {
+/// Parses a [String] to a [DateTime] object
+DateTime? parseDateTime(String? dateString) {
   if (dateString == null) return null;
   return _parseRfc822DateTime(dateString) ?? _parseIso8601DateTime(dateString);
 }
 
+/// Parses a [String] to a [DateTime] object based on the RFC 822 specification
 DateTime? _parseRfc822DateTime(String dateString) {
   try {
     var utc = false;
-    if (dateString.contains(RegExp(r'(GMT|[+-]0{2}(0{2})?)'))) {
+    if (dateString.contains(RegExp('(GMT|[+-]0{2}(0{2})?)'))) {
       utc = true;
     }
 
     var pattern = rfc822DateOnlyPattern;
-    if (dateString.contains(RegExp(r'(0?[1-9]|1[0-2]):[0-5][0-9]:[0-5][0-9]'))) {
+    if (dateString.contains(RegExp('(0?[1-9]|1[0-2]):[0-5][0-9]:[0-5][0-9]'))) {
       pattern = rfc822DatePattern;
-    } else if (dateString.contains(RegExp(r'(0?[1-9]|1[0-2]):[0-5][0-9]'))) {
+    } else if (dateString.contains(RegExp('(0?[1-9]|1[0-2]):[0-5][0-9]'))) {
       pattern = rfc822DateWithoutSecondsPattern;
     }
 
@@ -30,7 +35,8 @@ DateTime? _parseRfc822DateTime(String dateString) {
   }
 }
 
-DateTime? _parseIso8601DateTime(dateString) {
+/// Parses a [String] to a [DateTime] object based on the ISO 8601 specification
+DateTime? _parseIso8601DateTime(String dateString) {
   try {
     return DateTime.parse(dateString);
   } on FormatException {
