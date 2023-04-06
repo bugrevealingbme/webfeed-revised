@@ -8,8 +8,8 @@ class ItunesImage {
 
   /// Parse constructor for the ItunesImage class, used when 'parsing' a feed
   factory ItunesImage.parse(XmlElement element) => ItunesImage(
-      href: element.getAttribute('href')?.trim(),
-    );
+        href: element.getAttribute('href')?.trim(),
+      );
 
   /// The href of the image
   final String? href;

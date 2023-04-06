@@ -9,15 +9,17 @@ class AtomPerson {
 
   /// Parse constructor for the AtomPerson class, used when 'parsing' a feed
   factory AtomPerson.parse(XmlElement element) => AtomPerson(
-      name: element.findElements('name').firstOrNull?.text,
-      uri: element.findElements('uri').firstOrNull?.text,
-      email: element.findElements('email').firstOrNull?.text,
-    );
+        name: element.findElements('name').firstOrNull?.text,
+        uri: element.findElements('uri').firstOrNull?.text,
+        email: element.findElements('email').firstOrNull?.text,
+      );
 
   /// The name of the person
   final String? name;
+
   /// The URI of the person, must be an IRI reference
   final String? uri;
+
   /// The email of the person
   final String? email;
 }

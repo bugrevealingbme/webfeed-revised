@@ -10,7 +10,6 @@ import 'package:xml/xml.dart';
 /// Represents an Atom item
 /// See https://tools.ietf.org/html/rfc4287
 class AtomItem {
-
   /// Default constructor for the AtomItem class
   AtomItem({
     this.id,
@@ -30,58 +29,61 @@ class AtomItem {
 
   /// Parse constructor for the AtomItem class, used when 'parsing' a feed
   factory AtomItem.parse(XmlElement element) => AtomItem(
-      id: element.findElements('id').firstOrNull?.text,
-      title: element.findElements('title').firstOrNull?.text,
-      updated: parseDateTime(element.findElements('updated').firstOrNull?.text),
-      authors: element
-          .findElements('author')
-          .map(AtomPerson.parse)
-          .toList(),
-      links:
-          element.findElements('link').map(AtomLink.parse).toList(),
-      categories: element
-          .findElements('category')
-          .map(AtomCategory.parse)
-          .toList(),
-      contributors: element
-          .findElements('contributor')
-          .map(AtomPerson.parse)
-          .toList(),
-      source: element
-          .findElements('source')
-          .map(AtomSource.parse)
-          .firstOrNull,
-      published: element.findElements('published').firstOrNull?.text,
-      content: element.findElements('content').firstOrNull?.text,
-      summary: element.findElements('summary').firstOrNull?.text,
-      rights: element.findElements('rights').firstOrNull?.text,
-      media: Media.parse(element),
-    );
+        id: element.findElements('id').firstOrNull?.text,
+        title: element.findElements('title').firstOrNull?.text,
+        updated:
+            parseDateTime(element.findElements('updated').firstOrNull?.text),
+        authors: element.findElements('author').map(AtomPerson.parse).toList(),
+        links: element.findElements('link').map(AtomLink.parse).toList(),
+        categories:
+            element.findElements('category').map(AtomCategory.parse).toList(),
+        contributors:
+            element.findElements('contributor').map(AtomPerson.parse).toList(),
+        source:
+            element.findElements('source').map(AtomSource.parse).firstOrNull,
+        published: element.findElements('published').firstOrNull?.text,
+        content: element.findElements('content').firstOrNull?.text,
+        summary: element.findElements('summary').firstOrNull?.text,
+        rights: element.findElements('rights').firstOrNull?.text,
+        media: Media.parse(element),
+      );
 
   /// The item id
   final String? id;
+
   /// The item title
   final String? title;
+
   /// The item updated date
   final DateTime? updated;
+
   /// The item authors
   final List<AtomPerson>? authors;
+
   /// The item links
   final List<AtomLink>? links;
+
   /// The item categories
   final List<AtomCategory>? categories;
+
   /// The item contributors
   final List<AtomPerson>? contributors;
+
   /// The item source
   final AtomSource? source;
+
   /// The item published date
   final String? published;
+
   /// The item content
   final String? content;
+
   /// The item summary
   final String? summary;
+
   /// The item rights
   final String? rights;
+
   /// The item media
   final Media? media;
 }

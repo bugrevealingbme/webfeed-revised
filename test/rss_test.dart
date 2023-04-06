@@ -15,9 +15,9 @@ void main() {
     try {
       RssFeed.parse(xmlString);
       fail('Should throw Argument Error');
-    } on Exception catch (e) {
-      log('Exception during RssFeed parsing');
-      log(e.toString());
+      // ignore: avoid_catching_errors
+    } on ArgumentError {
+      log('Exception during AtomFeed parsing');
     }
   });
   test('parse RSS.xml', () {
@@ -26,8 +26,10 @@ void main() {
     final feed = RssFeed.parse(xmlString);
 
     expect(feed.title, 'News - Foo bar News');
-    expect(feed.description,
-        'Foo bar News and Updates feed provided by Foo bar, Inc.',);
+    expect(
+      feed.description,
+      'Foo bar News and Updates feed provided by Foo bar, Inc.',
+    );
     expect(feed.link, 'https://foo.bar.news/');
     expect(feed.author, 'hello@world.net');
     expect(feed.language, 'en-US');
@@ -70,29 +72,41 @@ void main() {
 
     expect(feed.items?.length, 3);
 
-    expect(feed.items!.first.title,
-        'The standard Lorem Ipsum passage, used since the 1500s',);
-    expect(feed.items!.first.description,
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit',);
+    expect(
+      feed.items!.first.title,
+      'The standard Lorem Ipsum passage, used since the 1500s',
+    );
+    expect(
+      feed.items!.first.description,
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    );
     expect(feed.items?.first.link, 'https://foo.bar.news/1');
     expect(feed.items?.first.guid, 'https://foo.bar.news/1?guid');
-    expect(feed.items?.first.pubDate,
-        DateTime(2018, 03, 26, 14),); // Mon, 26 Mar 2018 14:00:00 PDT
+    expect(
+      feed.items?.first.pubDate,
+      DateTime(2018, 03, 26, 14),
+    ); // Mon, 26 Mar 2018 14:00:00 PDT
     expect(feed.items?.first.categories?.first.domain, 'news');
     expect(feed.items?.first.categories?.first.value, 'Lorem');
     expect(feed.items?.first.author, 'alice@foo.bar.news');
     expect(feed.items?.first.source?.url, 'https://foo.bar.news/1?source');
     expect(feed.items?.first.source?.value, 'Foo Bar');
     expect(feed.items?.first.comments, 'https://foo.bar.news/1/comments');
-    expect(feed.items?.first.enclosure?.url,
-        'http://www.scripting.com/mp3s/weatherReportSuite.mp3',);
+    expect(
+      feed.items?.first.enclosure?.url,
+      'http://www.scripting.com/mp3s/weatherReportSuite.mp3',
+    );
     expect(feed.items!.first.enclosure!.length, 12216320);
     expect(feed.items!.first.enclosure!.type, 'audio/mpeg');
 
-    expect(feed.items!.first.content!.value,
-        '<img width="1000" height="690" src="https://test.com/image_link"/> Test content<br />',);
     expect(
-        feed.items?.first.content?.images.first, 'https://test.com/image_link',);
+      feed.items!.first.content!.value,
+      '<img width="1000" height="690" src="https://test.com/image_link"/> Test content<br />',
+    );
+    expect(
+      feed.items?.first.content?.images.first,
+      'https://test.com/image_link',
+    );
 
     // DateTime without seconds, Tue, 20 Mar 2018 10:00 PDT
     expect(feed.items?[1].pubDate, DateTime(2018, 03, 20, 10));
@@ -106,15 +120,19 @@ void main() {
     final feed = RssFeed.parse(xmlString);
     expect(feed.title, 'Song Site');
     expect(
-        feed.description, 'Media RSS example with new fields added in v1.5.0',);
+      feed.description,
+      'Media RSS example with new fields added in v1.5.0',
+    );
 
     expect(feed.items!.length, 1);
 
     final item = feed.items!.first;
     expect(item.title, null);
     expect(item.link, 'http://www.foo.com');
-    expect(item.pubDate,
-        DateTime(2001, 08, 27, 16, 08, 56),); //Mon, 27 Aug 2001 16:08:56 PST
+    expect(
+      item.pubDate,
+      DateTime(2001, 08, 27, 16, 08, 56),
+    ); //Mon, 27 Aug 2001 16:08:56 PST
 
     expect(item.media!.group!.contents!.length, 5);
     expect(item.media!.group!.credits!.length, 2);
@@ -140,8 +158,10 @@ void main() {
     expect(mediaCredit.scheme, 'urn:yvs');
     expect(mediaCredit.value, 'copyright holder of the entity');
 
-    expect(item.media!.category!.scheme,
-        'http://search.yahoo.com/mrss/category_ schema',);
+    expect(
+      item.media!.category!.scheme,
+      'http://search.yahoo.com/mrss/category_ schema',
+    );
     expect(item.media!.category!.label, 'Music');
     expect(item.media!.category!.value, 'music/artist/album/song');
 
@@ -152,8 +172,10 @@ void main() {
     expect(item.media!.title!.value, "The Judy's -- The Moo Song");
 
     expect(item.media!.description!.type, 'plain');
-    expect(item.media!.description!.value,
-        'This was some really bizarre band I listened to as a young lad.',);
+    expect(
+      item.media!.description!.value,
+      'This was some really bizarre band I listened to as a young lad.',
+    );
 
     expect(item.media!.keywords, 'kitty, cat, big dog, yarn, fluffy');
 
@@ -203,8 +225,10 @@ void main() {
     expect(item.media!.embed!.height, 323);
     expect(item.media!.embed!.params!.length, 5);
     expect(item.media!.embed!.params!.first.name, 'type');
-    expect(item.media!.embed!.params!.first.value,
-        'application/x-shockwave-flash',);
+    expect(
+      item.media!.embed!.params!.first.value,
+      'application/x-shockwave-flash',
+    );
 
     expect(item.media!.responses!.length, 2);
     expect(item.media!.responses!.first, 'http://www.response1.com');
@@ -220,8 +244,10 @@ void main() {
     expect(item.media!.prices!.length, 2);
     expect(item.media!.prices!.first.price, 19.99);
     expect(item.media!.prices!.first.type, 'rent');
-    expect(item.media!.prices!.first.info,
-        'http://www.dummy.jp/package_info.html',);
+    expect(
+      item.media!.prices!.first.info,
+      'http://www.dummy.jp/package_info.html',
+    );
     expect(item.media!.prices!.first.currency, 'EUR');
 
     expect(item.media!.license!.type, 'text/html');
@@ -334,18 +360,23 @@ void main() {
     expect(feed.itunes!.author, 'Changelog Media');
     expect(feed.itunes!.summary, 'Foo');
     expect(feed.itunes!.explicit, false);
-    expect(feed.itunes!.image!.href,
-        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',);
-    expect(feed.itunes!.keywords,
-        'go,golang,open source,software,development'.split(','),);
+    expect(
+      feed.itunes!.image!.href,
+      'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',
+    );
+    expect(
+      feed.itunes!.keywords,
+      'go,golang,open source,software,development'.split(','),
+    );
     expect(feed.itunes!.owner!.name, 'Changelog Media');
     expect(feed.itunes!.owner!.email, 'editors@changelog.com');
     expect(
-        {
-          feed.itunes!.categories![0].category,
-          feed.itunes!.categories![1].category
-        },
-        ['Technology', 'Foo'],);
+      {
+        feed.itunes!.categories![0].category,
+        feed.itunes!.categories![1].category
+      },
+      ['Technology', 'Foo'],
+    );
     for (final category in feed.itunes!.categories!) {
       switch (category.category) {
         case 'Foo':
@@ -366,16 +397,22 @@ void main() {
     expect(item.itunes!.episodeType, ItunesEpisodeType.full);
     expect(item.itunes!.episode, 1);
     expect(item.itunes!.season, 1);
-    expect(item.itunes!.image!.href,
-        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',);
+    expect(
+      item.itunes!.image!.href,
+      'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',
+    );
     expect(item.itunes!.duration, const Duration(minutes: 32, seconds: 30));
     expect(item.itunes!.explicit, false);
-    expect(item.itunes!.keywords,
-        'go,golang,open source,software,development'.split(','),);
+    expect(
+      item.itunes!.keywords,
+      'go,golang,open source,software,development'.split(','),
+    );
     expect(item.itunes!.subtitle, 'with Erik, Carlisia, and Brian');
     expect(item.itunes!.summary, 'Foo');
-    expect(item.itunes!.author,
-        'Erik St. Martin, Carlisia Pinto, and Brian Ketelsen',);
+    expect(
+      item.itunes!.author,
+      'Erik St. Martin, Carlisia Pinto, and Brian Ketelsen',
+    );
     expect(item.itunes!.explicit, false);
     expect(item.itunes!.title, 'awesome title');
     expect(item.itunes!.block, false);
@@ -419,8 +456,10 @@ void main() {
     expect(feed.link, 'http://meerkat.oreillynet.com');
     expect(feed.description, 'Meerkat: An Open Wire Service');
     expect(feed.image!.title, 'Meerkat Powered!');
-    expect(feed.image!.url,
-        'http://meerkat.oreillynet.com/icons/meerkat-powered.jpg',);
+    expect(
+      feed.image!.url,
+      'http://meerkat.oreillynet.com/icons/meerkat-powered.jpg',
+    );
     expect(feed.image!.link, 'http://meerkat.oreillynet.com');
     expect(feed.syndication!.updatePeriod, SyndicationUpdatePeriod.hourly);
     expect(feed.syndication!.updateFrequency, 2);
@@ -430,7 +469,7 @@ void main() {
     expect(
       feed.items!.first.description,
       'XML is placing increasingly heavy loads on the existing technical '
-          'infrastructure of the Internet.',
+      'infrastructure of the Internet.',
     );
     expect(feed.items!.first.link, 'http://c.moreover.com/click/here.pl?r123');
   });

@@ -1,5 +1,5 @@
 name: webfeed_revised
-version: 0.7.0
+version: 0.7.2
 description: webfeed-revised is a dart package for parsing RSS and Atom feeds. Media, DublinCore, iTunes, Syndication namespaces are also supported.
 homepage: https://github.com/Peterkrol12/webfeed-revised
 environment:

@@ -11,12 +11,13 @@ class Statistics {
 
   /// Parse constructor for the Statistics class, used when 'parsing' a feed
   factory Statistics.parse(XmlElement? element) => Statistics(
-      views: int.tryParse(element?.getAttribute('views') ?? '0'),
-      favorites: int.tryParse(element?.getAttribute('favorites') ?? '0'),
-    );
+        views: int.tryParse(element?.getAttribute('views') ?? '0'),
+        favorites: int.tryParse(element?.getAttribute('favorites') ?? '0'),
+      );
 
   /// The views of the media
   final int? views;
+
   /// The favorites of the media
   final int? favorites;
 }

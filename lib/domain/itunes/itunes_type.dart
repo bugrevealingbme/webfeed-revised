@@ -6,9 +6,11 @@ enum ItunesType {
   /// The default type, used when specifying the episodes can be consumed
   /// without any specific order
   episodic,
+
   /// Used when specifying episodes are intended to be consumed in sequential
   /// order
   serial,
+
   /// A fallback type
   unknown
 }

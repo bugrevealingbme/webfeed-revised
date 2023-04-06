@@ -11,12 +11,13 @@ class Title {
 
   /// Parse constructor for the Title class, used when 'parsing' a feed
   factory Title.parse(XmlElement element) => Title(
-      type: element.getAttribute('type'),
-      value: element.text,
-    );
+        type: element.getAttribute('type'),
+        value: element.text,
+      );
 
   /// The type of the title
   final String? type;
+
   /// The value of the title
   final String? value;
 }

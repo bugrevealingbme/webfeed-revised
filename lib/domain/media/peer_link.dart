@@ -12,15 +12,17 @@ class PeerLink {
 
   /// Parse constructor for the PeerLink class, used when 'parsing' a feed
   factory PeerLink.parse(XmlElement element) => PeerLink(
-      type: element.getAttribute('type'),
-      href: element.getAttribute('href'),
-      value: element.text,
-    );
+        type: element.getAttribute('type'),
+        href: element.getAttribute('href'),
+        value: element.text,
+      );
 
   /// The type of the P2P link
   final String? type;
+
   /// The actual P2P link
   final String? href;
+
   /// Unknown
   final String? value;
 }

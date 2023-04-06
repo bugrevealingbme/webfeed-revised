@@ -11,12 +11,13 @@ class Hash {
 
   /// Parse constructor for the Hash class, used when 'parsing' a feed
   factory Hash.parse(XmlElement element) => Hash(
-      algo: element.getAttribute('algo'),
-      value: element.text,
-    );
+        algo: element.getAttribute('algo'),
+        value: element.text,
+      );
 
   /// The algorithm of the hash
   final String? algo;
+
   /// The value of the hash
   final String? value;
 }

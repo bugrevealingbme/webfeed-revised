@@ -11,12 +11,13 @@ class Tags {
 
   /// Parse constructor for the Tags class, used when 'parsing' a feed
   factory Tags.parse(XmlElement element) => Tags(
-      tags: element.text,
-      weight: int.tryParse(element.getAttribute('weight') ?? '1'),
-    );
+        tags: element.text,
+        weight: int.tryParse(element.getAttribute('weight') ?? '1'),
+      );
 
   /// The tags of the media
   final String? tags;
+
   /// The weight of the tags
   final int? weight;
 }

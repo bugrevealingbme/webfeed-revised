@@ -65,10 +65,7 @@ class Itunes {
           .findElements('itunes:category')
           .map(ItunesCategory.parse)
           .toList(),
-      type: element
-          .findElements('itunes:type')
-          .map(newItunesType)
-          .firstOrNull,
+      type: element.findElements('itunes:type').map(newItunesType).firstOrNull,
       newFeedUrl: element.findElements('itunes:new-feed-url').firstOrNull?.text,
       block: parseBoolLiteral(element, 'itunes:block'),
       complete: parseBoolLiteral(element, 'itunes:complete'),
@@ -84,36 +81,52 @@ class Itunes {
 
   /// The author of the podcast
   final String? author;
+
   /// The summary of the podcast
   final String? summary;
+
   /// Whether the podcast is explicit or not
   final bool? explicit;
+
   /// The title of the podcast
   final String? title;
+
   /// The subtitle of the podcast
   final String? subtitle;
+
   /// The podcast owner contact information
   final ItunesOwner? owner;
+
   /// The keywords of the podcast
   final List<String>? keywords;
+
   /// The image of the podcast
   final ItunesImage? image;
+
   /// The categories of the podcast
   final List<ItunesCategory>? categories;
+
   /// The type of the podcast
   final ItunesType? type;
+
   /// The new feed url of the podcast
   final String? newFeedUrl;
+
   /// Whether the podcast is blocked or not
   final bool? block;
+
   /// Whether the podcast is complete or not
   final bool? complete;
+
   /// The episode number of the podcast
   final int? episode;
+
   /// The season number of the podcast
   final int? season;
+
   /// The duration of the podcast
   final Duration? duration;
+
   /// The episode type of the podcast
   final ItunesEpisodeType? episodeType;
 

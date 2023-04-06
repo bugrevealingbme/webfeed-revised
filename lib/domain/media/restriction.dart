@@ -12,15 +12,17 @@ class Restriction {
 
   /// Parse constructor for the Restriction class, used when 'parsing' a feed
   factory Restriction.parse(XmlElement element) => Restriction(
-      relationship: element.getAttribute('relationship'),
-      type: element.getAttribute('type'),
-      value: element.text,
-    );
+        relationship: element.getAttribute('relationship'),
+        type: element.getAttribute('type'),
+        value: element.text,
+      );
 
   /// The relationship of the restriction
   final String? relationship;
+
   /// The type of the restriction
   final String? type;
+
   /// The value of the restriction
   final String? value;
 }

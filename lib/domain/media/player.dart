@@ -13,18 +13,21 @@ class Player {
 
   /// Parse constructor for the Player class, used when 'parsing' a feed
   factory Player.parse(XmlElement element) => Player(
-      url: element.getAttribute('url'),
-      width: int.tryParse(element.getAttribute('width') ?? '0'),
-      height: int.tryParse(element.getAttribute('height') ?? '0'),
-      value: element.text,
-    );
+        url: element.getAttribute('url'),
+        width: int.tryParse(element.getAttribute('width') ?? '0'),
+        height: int.tryParse(element.getAttribute('height') ?? '0'),
+        value: element.text,
+      );
 
   /// The url of the player
   final String? url;
+
   /// The width of the player
   final int? width;
+
   /// The height of the player
   final int? height;
+
   /// The value of the player
   final String? value;
 }

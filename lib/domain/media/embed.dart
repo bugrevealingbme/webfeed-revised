@@ -22,10 +22,13 @@ class Embed {
 
   /// The url of the embed
   final String? url;
+
   /// The width of the embed element
   final int? width;
+
   /// The height of the embed element
   final int? height;
+
   /// Parameters of the embed, such as type
   final List<Param>? params;
 }

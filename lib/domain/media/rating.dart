@@ -11,12 +11,13 @@ class Rating {
 
   /// Parse constructor for the Rating class, used when 'parsing' a feed
   factory Rating.parse(XmlElement element) => Rating(
-      scheme: element.getAttribute('scheme'),
-      value: element.text,
-    );
+        scheme: element.getAttribute('scheme'),
+        value: element.text,
+      );
 
   /// The scheme of the rating
   final String? scheme;
+
   /// The value of the rating
   final String? value;
 }

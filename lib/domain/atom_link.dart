@@ -29,14 +29,19 @@ class AtomLink {
 
   /// The URI of the referenced resource
   final String? href;
+
   /// The link relationship type
   final String? rel;
+
   /// The media type of the referenced resource
   final String? type;
+
   /// The language of the referenced resource
   final String? hreflang;
+
   /// The human-readable information about the link
   final String? title;
+
   /// The length of the resource, in bytes
   final int length;
 }

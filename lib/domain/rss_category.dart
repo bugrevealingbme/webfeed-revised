@@ -12,6 +12,7 @@ class RssCategory {
 
   /// The domain of the category
   final String? domain;
+
   /// The value of the category
   final String value;
 }

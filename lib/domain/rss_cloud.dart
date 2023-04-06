@@ -24,12 +24,16 @@ class RssCloud {
 
   /// The domain of the cloud
   final String? domain;
+
   /// The port of the cloud endpoint
   final String? port;
+
   /// The path of the cloud endpoint
   final String? path;
+
   /// The register procedure of the cloud
   final String? registerProcedure;
+
   /// The protocol of the cloud endpoint
   final String? protocol;
 }

@@ -12,15 +12,17 @@ class License {
 
   /// Parse constructor for the License class, used when 'parsing' a feed
   factory License.parse(XmlElement element) => License(
-      type: element.getAttribute('type'),
-      href: element.getAttribute('href'),
-      value: element.text,
-    );
+        type: element.getAttribute('type'),
+        href: element.getAttribute('href'),
+        value: element.text,
+      );
 
   /// The type of the license
   final String? type;
+
   /// The href of the license
   final String? href;
+
   /// The value of the license
   final String? value;
 }

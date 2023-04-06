@@ -60,30 +60,43 @@ class RssItem {
 
   /// The title of the item
   final String? title;
+
   /// The description of the item
   final String? description;
+
   /// The link of the item
   final String? link;
+
   /// The categories of the item
   final List<RssCategory>? categories;
+
   /// The guid of the item
   final String? guid;
+
   /// The publishing date of the item
   final DateTime? pubDate;
+
   /// The author of the item
   final String? author;
+
   /// The comments of the item
   final String? comments;
+
   /// The source of the item
   final RssSource? source;
+
   /// The content of the item
   final RssContent? content;
+
   /// The media of the item
   final Media? media;
+
   /// The enclosure of the item
   final RssEnclosure? enclosure;
+
   /// The DublinCore of the item
   final DublinCore? dc;
+
   /// The Itunes of the item
   final Itunes? itunes;
 }
