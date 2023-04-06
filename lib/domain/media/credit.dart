@@ -12,15 +12,17 @@ class Credit {
 
   /// Parse constructor for the Credit class, used when 'parsing' a feed
   factory Credit.parse(XmlElement element) => Credit(
-      role: element.getAttribute('role'),
-      scheme: element.getAttribute('scheme'),
-      value: element.text,
-    );
+        role: element.getAttribute('role'),
+        scheme: element.getAttribute('scheme'),
+        value: element.text,
+      );
 
   /// The role of the credit
   final String? role;
+
   /// The scheme of the credit
   final String? scheme;
+
   /// The value of the credit
   final String? value;
 }

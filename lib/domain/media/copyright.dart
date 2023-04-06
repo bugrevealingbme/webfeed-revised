@@ -11,12 +11,13 @@ class Copyright {
 
   /// Parse constructor for the Copyright class, used when 'parsing' a feed
   factory Copyright.parse(XmlElement element) => Copyright(
-      url: element.getAttribute('url'),
-      value: element.text,
-    );
+        url: element.getAttribute('url'),
+        value: element.text,
+      );
 
   /// The url of the copyright
   final String? url;
+
   /// The value of the copyright
   final String? value;
 }

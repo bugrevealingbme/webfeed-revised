@@ -17,8 +17,10 @@ class AtomGenerator {
   /// The URI of the software used to generate the feed, must be an IRI
   /// reference
   final String? uri;
+
   /// The version of the generating agent
   final String? version;
+
   /// The name of the generating agent
   final String? value;
 }

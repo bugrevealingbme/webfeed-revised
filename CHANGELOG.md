@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.7.2](https://pub.dev/packages/webfeed-revised/versions/0.7.2)
+- Applied dart format
+
 ## [0.7.1](https://pub.dev/packages/webfeed-revised/versions/0.7.1)
 - Updated dependencies
 - Fixed RssItem pubDate optional seconds

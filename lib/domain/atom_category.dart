@@ -17,8 +17,10 @@ class AtomCategory {
 
   /// The category term
   final String? term;
+
   /// The category scheme
   final String? scheme;
+
   /// The category label
   final String? label;
 }

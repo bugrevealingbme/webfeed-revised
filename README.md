@@ -1,6 +1,6 @@
 # WebFeed Revised
 
-[![Pub](https://img.shields.io/pub/v/webfeed-revised.svg)](https://pub.dev/packages/webfeed-revised)
+[![Pub](https://img.shields.io/pub/v/webfeed_revised.svg)](https://pub.dev/packages/webfeed-revised)
 
 A dart package for parsing RSS and Atom feed.
 

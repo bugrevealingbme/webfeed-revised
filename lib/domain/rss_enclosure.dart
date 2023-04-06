@@ -16,8 +16,10 @@ class RssEnclosure {
 
   /// The url of the enclosure
   final String? url;
+
   /// The type of the enclosure
   final String? type;
+
   /// The length of the enclosure
   final int? length;
 }

@@ -32,10 +32,13 @@ class Group {
 
   /// The contents of the Media element
   final List<Content>? contents;
+
   /// The credits of the Media element
   final List<Credit>? credits;
+
   /// The category of the Media element
   final Category? category;
+
   /// The rating of the Media element
   final Rating? rating;
 }

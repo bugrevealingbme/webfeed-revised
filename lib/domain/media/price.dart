@@ -13,18 +13,21 @@ class Price {
 
   /// Parse constructor for the Price class, used when 'parsing' a feed
   factory Price.parse(XmlElement element) => Price(
-      price: double.tryParse(element.getAttribute('price') ?? '0'),
-      type: element.getAttribute('type'),
-      info: element.getAttribute('info'),
-      currency: element.getAttribute('currency'),
-    );
+        price: double.tryParse(element.getAttribute('price') ?? '0'),
+        type: element.getAttribute('type'),
+        info: element.getAttribute('info'),
+        currency: element.getAttribute('currency'),
+      );
 
   /// The price of the media
   final double? price;
+
   /// The type of the price
   final String? type;
+
   /// The info of the price
   final String? info;
+
   /// The currency of the price
   final String? currency;
 }

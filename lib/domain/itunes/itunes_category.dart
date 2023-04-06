@@ -17,6 +17,7 @@ class ItunesCategory {
 
   /// The category of the podcast
   final String? category;
+
   /// The sub categories of the podcast
   final List<String>? subCategories;
 }

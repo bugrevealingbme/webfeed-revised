@@ -12,15 +12,17 @@ class Category {
 
   /// Parse constructor for the Category class, used when 'parsing' a feed
   factory Category.parse(XmlElement element) => Category(
-      scheme: element.getAttribute('scheme'),
-      label: element.getAttribute('label'),
-      value: element.text,
-    );
+        scheme: element.getAttribute('scheme'),
+        label: element.getAttribute('label'),
+        value: element.text,
+      );
 
   /// The scheme of the category
   final String? scheme;
+
   /// The label of the category
   final String? label;
+
   /// The value of the category
   final String? value;
 }

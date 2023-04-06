@@ -24,6 +24,7 @@ class RssContent {
 
   /// The value of the content
   final String value;
+
   /// The images of the content
   final Iterable<String> images;
 }

@@ -10,8 +10,8 @@ class Rights {
 
   /// Parse constructor for the Rights class, used when 'parsing' a feed
   factory Rights.parse(XmlElement element) => Rights(
-      status: element.getAttribute('status'),
-    );
+        status: element.getAttribute('status'),
+      );
 
   /// The status of the rights
   final String? status;

@@ -64,10 +64,8 @@ class RssFeed {
           .findElements('image')
           .map(RssImage.parse)
           .firstOrNull,
-      cloud: channelElement
-          .findElements('cloud')
-          .map(RssCloud.parse)
-          .firstOrNull,
+      cloud:
+          channelElement.findElements('cloud').map(RssCloud.parse).firstOrNull,
       categories: channelElement
           .findElements('category')
           .map(RssCategory.parse)
@@ -97,7 +95,8 @@ class RssFeed {
       rating: channelElement.findElements('rating').firstOrNull?.text,
       webMaster: channelElement.findElements('webMaster').firstOrNull?.text,
       ttl: int.tryParse(
-          channelElement.findElements('ttl').firstOrNull?.text ?? '0',),
+        channelElement.findElements('ttl').firstOrNull?.text ?? '0',
+      ),
       dc: DublinCore.parse(channelElement),
       itunes: Itunes.parse(channelElement),
       syndication: Syndication.parse(channelElement),
@@ -106,46 +105,67 @@ class RssFeed {
 
   /// The title of the feed
   final String? title;
+
   /// The author of the feed
   final String? author;
+
   /// The description of the feed
   final String? description;
+
   /// The link of the feed
   final String? link;
+
   /// The items of the feed
   final List<RssItem>? items;
+
   /// The image of the feed
   final RssImage? image;
+
   /// The cloud of the feed
   final RssCloud? cloud;
+
   /// The categories of the feed
   final List<RssCategory>? categories;
+
   /// The skip days of the feed
   final List<String>? skipDays;
+
   /// The skip hours of the feed
   final List<int>? skipHours;
+
   /// The last build date of the feed
   final String? lastBuildDate;
+
   /// The language of the feed
   final String? language;
+
   /// The generator of the feed
   final String? generator;
+
   /// The copyright of the feed
   final String? copyright;
+
   /// The docs of the feed
   final String? docs;
+
   /// The managing editor of the feed
   final String? managingEditor;
+
   /// The rating of the feed
   final String? rating;
+
   /// The web master of the feed
   final String? webMaster;
+
   /// The ttl of the feed
   final int? ttl;
+
   /// The DublinCore of the feed
   final DublinCore? dc;
+
   /// The Itunes of the feed
   final Itunes? itunes;
+
   /// The Syndication of the feed
   final Syndication? syndication;
 }

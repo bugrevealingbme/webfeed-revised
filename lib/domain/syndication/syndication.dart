@@ -6,12 +6,16 @@ import 'package:xml/xml.dart';
 enum SyndicationUpdatePeriod {
   /// Hourly update period
   hourly,
+
   /// Daily update period
   daily,
+
   /// Weekly update period
   weekly,
+
   /// Monthly update period
   monthly,
+
   /// Yearly update period
   yearly
 }
@@ -51,16 +55,20 @@ class Syndication {
     return Syndication(
       updatePeriod: updatePeriod,
       updateFrequency: int.tryParse(
-          element.findElements('sy:updateFrequency').firstOrNull?.text ?? '1',),
+        element.findElements('sy:updateFrequency').firstOrNull?.text ?? '1',
+      ),
       updateBase: parseDateTime(
-          element.findElements('sy:updateBase').firstOrNull?.text,),
+        element.findElements('sy:updateBase').firstOrNull?.text,
+      ),
     );
   }
 
   /// The update period
   final SyndicationUpdatePeriod? updatePeriod;
+
   /// The update frequency
   final int? updateFrequency;
+
   /// The update base
   final DateTime? updateBase;
 }

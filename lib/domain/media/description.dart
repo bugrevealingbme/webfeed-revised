@@ -11,12 +11,13 @@ class Description {
 
   /// Parse constructor for the Description class, used when 'parsing' a feed
   factory Description.parse(XmlElement element) => Description(
-      type: element.getAttribute('type'),
-      value: element.text,
-    );
+        type: element.getAttribute('type'),
+        value: element.text,
+      );
 
   /// The type of the description
   final String? type;
+
   /// The value of the description
   final String? value;
 }

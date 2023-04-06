@@ -9,15 +9,17 @@ class RssImage {
 
   /// Parse constructor for the RssImage class, used when 'parsing' a feed
   factory RssImage.parse(XmlElement element) => RssImage(
-      title: element.findElements('title').firstOrNull?.text,
-      url: element.findElements('url').firstOrNull?.text,
-      link: element.findElements('link').firstOrNull?.text,
-    );
+        title: element.findElements('title').firstOrNull?.text,
+        url: element.findElements('url').firstOrNull?.text,
+        link: element.findElements('link').firstOrNull?.text,
+      );
 
   /// The title of the image
   final String? title;
+
   /// The url of the image
   final String? url;
+
   /// The link of the image
   final String? link;
 }

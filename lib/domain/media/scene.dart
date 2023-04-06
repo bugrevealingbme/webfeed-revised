@@ -14,18 +14,21 @@ class Scene {
 
   /// Parse constructor for the Scene class, used when 'parsing' a feed
   factory Scene.parse(XmlElement element) => Scene(
-      title: element.findElements('sceneTitle').firstOrNull?.text,
-      description: element.findElements('sceneDescription').firstOrNull?.text,
-      startTime: element.findElements('sceneStartTime').firstOrNull?.text,
-      endTime: element.findElements('sceneEndTime').firstOrNull?.text,
-    );
+        title: element.findElements('sceneTitle').firstOrNull?.text,
+        description: element.findElements('sceneDescription').firstOrNull?.text,
+        startTime: element.findElements('sceneStartTime').firstOrNull?.text,
+        endTime: element.findElements('sceneEndTime').firstOrNull?.text,
+      );
 
   /// The title of the scene
   final String? title;
+
   /// The description of the scene
   final String? description;
+
   /// The start time of the scene
   final String? startTime;
+
   /// The end time of the scene
   final String? endTime;
 }

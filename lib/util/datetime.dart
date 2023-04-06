@@ -2,8 +2,10 @@ import 'package:intl/intl.dart';
 
 /// [DateTime] format based on the RFC 822 specification
 const rfc822DatePattern = 'EEE, dd MMM yyyy HH:mm:ss Z';
+
 /// [DateTime] format based on the RFC 822 specification without seconds
 const rfc822DateWithoutSecondsPattern = 'EEE, dd MMM yyyy HH:mm Z';
+
 /// [DateTime] format based on the RFC 822 specification without time
 const rfc822DateOnlyPattern = 'EEE, dd MMM yyyy';
 

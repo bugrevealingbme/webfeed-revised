@@ -16,6 +16,7 @@ class RssSource {
 
   /// The url of the source
   final String? url;
+
   /// The value of the source
   final String? value;
 }
