@@ -20,7 +20,7 @@ Forked from [WebFeed - V0.7.0](https://pub.dev/packages/webfeed) and improved up
 
 Add this line into your `pubspec.yaml`
 ```
-webfeed_revised: ^0.7.3
+webfeed_revised: ^0.7.3-beta.1
 ```
 
 Import the package into your dart code using:
