@@ -1,12 +1,9 @@
 import 'package:xml/xml.dart';
 
+/// Allows processes to register with a cloud to be notified of changes
+/// See https://www.rssboard.org/rss-specification#ltcloudgtSubelementOfLtchannelgt
 class RssCloud {
-  final String? domain;
-  final String? port;
-  final String? path;
-  final String? registerProcedure;
-  final String? protocol;
-
+  /// Default constructor for the RssCloud class
   RssCloud(
     this.domain,
     this.port,
@@ -15,12 +12,24 @@ class RssCloud {
     this.protocol,
   );
 
+  /// Parse constructor for the RssCloud class, used when 'parsing' a feed
   factory RssCloud.parse(XmlElement node) {
-    var domain = node.getAttribute('domain');
-    var port = node.getAttribute('port');
-    var path = node.getAttribute('path');
-    var registerProcedure = node.getAttribute('registerProcedure');
-    var protocol = node.getAttribute('protocol');
+    final domain = node.getAttribute('domain');
+    final port = node.getAttribute('port');
+    final path = node.getAttribute('path');
+    final registerProcedure = node.getAttribute('registerProcedure');
+    final protocol = node.getAttribute('protocol');
     return RssCloud(domain, port, path, registerProcedure, protocol);
   }
+
+  /// The domain of the cloud
+  final String? domain;
+  /// The port of the cloud endpoint
+  final String? port;
+  /// The path of the cloud endpoint
+  final String? path;
+  /// The register procedure of the cloud
+  final String? registerProcedure;
+  /// The protocol of the cloud endpoint
+  final String? protocol;
 }

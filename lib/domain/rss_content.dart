@@ -6,16 +6,13 @@ final _imagesRegExp = RegExp(
   caseSensitive: false,
 );
 
-/// For RSS Content Module:
-///
-/// - `xmlns:content="http://purl.org/rss/1.0/modules/content/"`
-///
+/// The content of a rss item
+/// See https://www.rssboard.org/rss-specification#hrelementsOfLtitemgt
 class RssContent {
-  String value;
-  Iterable<String> images;
-
+  /// Default constructor for the RssContent class
   RssContent(this.value, this.images);
 
+  /// Parse constructor for the RssContent class, used when 'parsing' a feed
   factory RssContent.parse(XmlElement element) {
     final content = element.text;
     final images = <String>[];
@@ -24,4 +21,9 @@ class RssContent {
     });
     return RssContent(content, images);
   }
+
+  /// The value of the content
+  final String value;
+  /// The images of the content
+  final Iterable<String> images;
 }

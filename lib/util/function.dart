@@ -1,15 +1,19 @@
+/// Returns a string with HTML tags removed and replaced with their Dart
+/// equivalent
 String? removeHtml(String? input) {
   if (input == null) return null;
   // Define a regular expression pattern that matches HTML tags
-  var exp = RegExp(r'<[^>]*>');
+  final exp = RegExp('<[^>]*>');
+
+  var parsedString = input;
 
   // Replace the HTML tags with their Dart equivalent
-  while (exp.hasMatch(input!)) {
-    input = input.replaceFirstMapped(exp, (match) {
+  while (exp.hasMatch(parsedString)) {
+    parsedString = parsedString.replaceFirstMapped(exp, (match) {
       if (match.start == 0) {
         return '';
       }
-      var tag = match.group(0);
+      final tag = match.group(0);
       switch (tag) {
         case '<p>':
           return '\n\n';

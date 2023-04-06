@@ -1,15 +1,17 @@
 import 'package:xml/xml.dart';
 
+/// The category of a Rss element
+/// See https://www.rssboard.org/rss-specification#ltcategorygtSubelementOfLtitemgt
 class RssCategory {
-  final String? domain;
-  final String value;
-
+  /// Default constructor for the RssCategory class
   RssCategory(this.domain, this.value);
 
-  factory RssCategory.parse(XmlElement element) {
-    var domain = element.getAttribute('domain');
-    var value = element.text;
+  /// Parse constructor for the RssCategory class, used when 'parsing' a feed
+  factory RssCategory.parse(XmlElement element) =>
+      RssCategory(element.getAttribute('domain'), element.text);
 
-    return RssCategory(domain, value);
-  }
+  /// The domain of the category
+  final String? domain;
+  /// The value of the category
+  final String value;
 }

@@ -4,31 +4,36 @@ import 'package:webfeed_revised/domain/media/tags.dart';
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
+/// Used for community related content
+/// See https://www.rssboard.org/media-rss#media-community
 class Community {
-  final StarRating? starRating;
-  final Statistics? statistics;
-  final Tags? tags;
-
+  /// Default constructor for the Community class
   Community({
     this.starRating,
     this.statistics,
     this.tags,
   });
 
-  factory Community.parse(XmlElement element) {
-    return Community(
+  /// Parse constructor for the Community class, used when 'parsing' a feed
+  factory Community.parse(XmlElement element) => Community(
       starRating: element
           .findElements('media:starRating')
-          .map((e) => StarRating.parse(e))
+          .map(StarRating.parse)
           .firstOrNull,
       statistics: element
           .findElements('media:statistics')
-          .map((e) => Statistics.parse(e))
+          .map(Statistics.parse)
           .firstOrNull,
       tags: element
           .findElements('media:tags')
-          .map((e) => Tags.parse(e))
+          .map(Tags.parse)
           .firstOrNull,
     );
-  }
+
+  /// The star rating of a Media element
+  final StarRating? starRating;
+  /// The statistics of a Media element
+  final Statistics? statistics;
+  /// The tags of a Media element
+  final Tags? tags;
 }

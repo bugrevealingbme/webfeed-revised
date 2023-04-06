@@ -1,18 +1,23 @@
 import 'package:webfeed_revised/util/iterable.dart';
 import 'package:xml/xml.dart';
 
+/// The image of a RSS feed
+/// See https://www.rssboard.org/rss-specification#ltimagegtSubelementOfLtchannelgt
 class RssImage {
-  final String? title;
-  final String? url;
-  final String? link;
-
+  /// Default constructor for the RssImage class
   RssImage({this.title, this.url, this.link});
 
-  factory RssImage.parse(XmlElement element) {
-    return RssImage(
+  /// Parse constructor for the RssImage class, used when 'parsing' a feed
+  factory RssImage.parse(XmlElement element) => RssImage(
       title: element.findElements('title').firstOrNull?.text,
       url: element.findElements('url').firstOrNull?.text,
       link: element.findElements('link').firstOrNull?.text,
     );
-  }
+
+  /// The title of the image
+  final String? title;
+  /// The url of the image
+  final String? url;
+  /// The link of the image
+  final String? link;
 }

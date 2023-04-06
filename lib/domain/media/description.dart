@@ -1,18 +1,22 @@
 import 'package:xml/xml.dart';
 
+/// The description of a feed
+/// See https://www.rssboard.org/media-rss#media-description
 class Description {
-  final String? type;
-  final String? value;
-
+  /// Default constructor for the Description class
   Description({
     this.type,
     this.value,
   });
 
-  factory Description.parse(XmlElement element) {
-    return Description(
+  /// Parse constructor for the Description class, used when 'parsing' a feed
+  factory Description.parse(XmlElement element) => Description(
       type: element.getAttribute('type'),
       value: element.text,
     );
-  }
+
+  /// The type of the description
+  final String? type;
+  /// The value of the description
+  final String? value;
 }
