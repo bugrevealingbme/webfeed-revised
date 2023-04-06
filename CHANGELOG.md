@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://pub.dev/packages/webfeed-revised/versions/0.7.1)
+- Updated dependencies
+- Fixed RssItem pubDate optional seconds
+- Added RssItem pubDate UTC parser
+- Added RssItem description HTML parser
+- Added documentation for public members
+
 ## [0.7.0](https://pub.dartlang.org/packages/webfeed/versions/0.7.0)
 - Null safety migration [#50](https://github.com/witochandra/webfeed/pull/50)
 - Parse duration if not empty [#39](https://github.com/witochandra/webfeed/pull/39)

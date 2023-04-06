@@ -1,29 +1,33 @@
 import 'dart:core';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:test/test.dart';
 import 'package:webfeed_revised/domain/itunes/itunes_episode_type.dart';
 import 'package:webfeed_revised/domain/itunes/itunes_type.dart';
 import 'package:webfeed_revised/domain/syndication/syndication.dart';
-import 'package:webfeed_revised/webfeed.dart';
+import 'package:webfeed_revised/webfeed_revised.dart';
 
 void main() {
   test('parse Invalid.xml', () {
-    var xmlString = File('test/xml/Invalid.xml').readAsStringSync();
+    final xmlString = File('test/xml/Invalid.xml').readAsStringSync();
 
     try {
       RssFeed.parse(xmlString);
       fail('Should throw Argument Error');
-    } on ArgumentError {}
+    } on Exception catch (e) {
+      log('Exception during RssFeed parsing');
+      log(e.toString());
+    }
   });
   test('parse RSS.xml', () {
-    var xmlString = File('test/xml/RSS.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.title, 'News - Foo bar News');
     expect(feed.description,
-        'Foo bar News and Updates feed provided by Foo bar, Inc.');
+        'Foo bar News and Updates feed provided by Foo bar, Inc.',);
     expect(feed.link, 'https://foo.bar.news/');
     expect(feed.author, 'hello@world.net');
     expect(feed.language, 'en-US');
@@ -67,13 +71,13 @@ void main() {
     expect(feed.items?.length, 3);
 
     expect(feed.items!.first.title,
-        'The standard Lorem Ipsum passage, used since the 1500s');
+        'The standard Lorem Ipsum passage, used since the 1500s',);
     expect(feed.items!.first.description,
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit',);
     expect(feed.items?.first.link, 'https://foo.bar.news/1');
     expect(feed.items?.first.guid, 'https://foo.bar.news/1?guid');
     expect(feed.items?.first.pubDate,
-        DateTime(2018, 03, 26, 14)); // Mon, 26 Mar 2018 14:00:00 PDT
+        DateTime(2018, 03, 26, 14),); // Mon, 26 Mar 2018 14:00:00 PDT
     expect(feed.items?.first.categories?.first.domain, 'news');
     expect(feed.items?.first.categories?.first.value, 'Lorem');
     expect(feed.items?.first.author, 'alice@foo.bar.news');
@@ -81,14 +85,14 @@ void main() {
     expect(feed.items?.first.source?.value, 'Foo Bar');
     expect(feed.items?.first.comments, 'https://foo.bar.news/1/comments');
     expect(feed.items?.first.enclosure?.url,
-        'http://www.scripting.com/mp3s/weatherReportSuite.mp3');
+        'http://www.scripting.com/mp3s/weatherReportSuite.mp3',);
     expect(feed.items!.first.enclosure!.length, 12216320);
     expect(feed.items!.first.enclosure!.type, 'audio/mpeg');
 
     expect(feed.items!.first.content!.value,
-        '<img width="1000" height="690" src="https://test.com/image_link"/> Test content<br />');
+        '<img width="1000" height="690" src="https://test.com/image_link"/> Test content<br />',);
     expect(
-        feed.items?.first.content?.images.first, 'https://test.com/image_link');
+        feed.items?.first.content?.images.first, 'https://test.com/image_link',);
 
     // DateTime without seconds, Tue, 20 Mar 2018 10:00 PDT
     expect(feed.items?[1].pubDate, DateTime(2018, 03, 20, 10));
@@ -97,20 +101,20 @@ void main() {
     expect(feed.items?[2].pubDate, DateTime(2018, 03, 20));
   });
   test('parse RSS-Media.xml', () {
-    var xmlString = File('test/xml/RSS-Media.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-Media.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
     expect(feed.title, 'Song Site');
     expect(
-        feed.description, 'Media RSS example with new fields added in v1.5.0');
+        feed.description, 'Media RSS example with new fields added in v1.5.0',);
 
     expect(feed.items!.length, 1);
 
-    var item = feed.items!.first;
+    final item = feed.items!.first;
     expect(item.title, null);
     expect(item.link, 'http://www.foo.com');
     expect(item.pubDate,
-        DateTime(2001, 08, 27, 16, 08, 56)); //Mon, 27 Aug 2001 16:08:56 PST
+        DateTime(2001, 08, 27, 16, 08, 56),); //Mon, 27 Aug 2001 16:08:56 PST
 
     expect(item.media!.group!.contents!.length, 5);
     expect(item.media!.group!.credits!.length, 2);
@@ -118,7 +122,7 @@ void main() {
     expect(item.media!.group!.rating!.value, 'nonadult');
 
     expect(item.media!.contents!.length, 2);
-    var mediaContent = item.media!.contents!.first;
+    final mediaContent = item.media!.contents!.first;
     expect(mediaContent.url, 'http://www.foo.com/video.mov');
     expect(mediaContent.type, 'video/quicktime');
     expect(mediaContent.fileSize, 2000);
@@ -131,13 +135,13 @@ void main() {
     expect(mediaContent.channels, 2);
 
     expect(item.media!.credits!.length, 2);
-    var mediaCredit = item.media!.credits!.first;
+    final mediaCredit = item.media!.credits!.first;
     expect(mediaCredit.role, 'owner1');
     expect(mediaCredit.scheme, 'urn:yvs');
     expect(mediaCredit.value, 'copyright holder of the entity');
 
     expect(item.media!.category!.scheme,
-        'http://search.yahoo.com/mrss/category_ schema');
+        'http://search.yahoo.com/mrss/category_ schema',);
     expect(item.media!.category!.label, 'Music');
     expect(item.media!.category!.value, 'music/artist/album/song');
 
@@ -149,12 +153,12 @@ void main() {
 
     expect(item.media!.description!.type, 'plain');
     expect(item.media!.description!.value,
-        'This was some really bizarre band I listened to as a young lad.');
+        'This was some really bizarre band I listened to as a young lad.',);
 
     expect(item.media!.keywords, 'kitty, cat, big dog, yarn, fluffy');
 
     expect(item.media!.thumbnails!.length, 2);
-    var mediaThumbnail = item.media!.thumbnails!.first;
+    final mediaThumbnail = item.media!.thumbnails!.first;
     expect(mediaThumbnail.url, 'http://www.foo.com/keyframe1.jpg');
     expect(mediaThumbnail.width, '75');
     expect(mediaThumbnail.height, '50');
@@ -200,7 +204,7 @@ void main() {
     expect(item.media!.embed!.params!.length, 5);
     expect(item.media!.embed!.params!.first.name, 'type');
     expect(item.media!.embed!.params!.first.value,
-        'application/x-shockwave-flash');
+        'application/x-shockwave-flash',);
 
     expect(item.media!.responses!.length, 2);
     expect(item.media!.responses!.first, 'http://www.response1.com');
@@ -217,7 +221,7 @@ void main() {
     expect(item.media!.prices!.first.price, 19.99);
     expect(item.media!.prices!.first.type, 'rent');
     expect(item.media!.prices!.first.info,
-        'http://www.dummy.jp/package_info.html');
+        'http://www.dummy.jp/package_info.html',);
     expect(item.media!.prices!.first.currency, 'EUR');
 
     expect(item.media!.license!.type, 'text/html');
@@ -237,9 +241,9 @@ void main() {
     expect(item.media!.scenes!.first.endTime, '00:45');
   });
   test('parse RSS-DC.xml', () {
-    var xmlString = File('test/xml/RSS-DC.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-DC.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.dc!.title, 'title');
     expect(feed.dc!.creator, 'creator');
@@ -279,9 +283,9 @@ void main() {
   });
 
   test('parse RSS-Empty.xml', () {
-    var xmlString = File('test/xml/RSS-Empty.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-Empty.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.title, null);
     expect(feed.description, null);
@@ -323,26 +327,26 @@ void main() {
   });
 
   test('parse RSS-Itunes.xml', () {
-    var xmlString = File('test/xml/RSS-Itunes.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-Itunes.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.itunes!.author, 'Changelog Media');
     expect(feed.itunes!.summary, 'Foo');
     expect(feed.itunes!.explicit, false);
     expect(feed.itunes!.image!.href,
-        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357');
+        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',);
     expect(feed.itunes!.keywords,
-        'go,golang,open source,software,development'.split(','));
+        'go,golang,open source,software,development'.split(','),);
     expect(feed.itunes!.owner!.name, 'Changelog Media');
     expect(feed.itunes!.owner!.email, 'editors@changelog.com');
     expect(
-        Set.from([
+        {
           feed.itunes!.categories![0].category,
           feed.itunes!.categories![1].category
-        ]),
-        ['Technology', 'Foo']);
-    for (var category in feed.itunes!.categories!) {
+        },
+        ['Technology', 'Foo'],);
+    for (final category in feed.itunes!.categories!) {
       switch (category.category) {
         case 'Foo':
           expect(category.subCategories, ['Bar', 'Baz']);
@@ -358,42 +362,42 @@ void main() {
     expect(feed.itunes!.block, true);
     expect(feed.itunes!.complete, true);
 
-    var item = feed.items![0];
+    final item = feed.items![0];
     expect(item.itunes!.episodeType, ItunesEpisodeType.full);
     expect(item.itunes!.episode, 1);
     expect(item.itunes!.season, 1);
     expect(item.itunes!.image!.href,
-        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357');
-    expect(item.itunes!.duration, Duration(minutes: 32, seconds: 30));
+        'https://cdn.changelog.com/uploads/covers/go-time-original.png?v=63725770357',);
+    expect(item.itunes!.duration, const Duration(minutes: 32, seconds: 30));
     expect(item.itunes!.explicit, false);
     expect(item.itunes!.keywords,
-        'go,golang,open source,software,development'.split(','));
+        'go,golang,open source,software,development'.split(','),);
     expect(item.itunes!.subtitle, 'with Erik, Carlisia, and Brian');
     expect(item.itunes!.summary, 'Foo');
     expect(item.itunes!.author,
-        'Erik St. Martin, Carlisia Pinto, and Brian Ketelsen');
+        'Erik St. Martin, Carlisia Pinto, and Brian Ketelsen',);
     expect(item.itunes!.explicit, false);
     expect(item.itunes!.title, 'awesome title');
     expect(item.itunes!.block, false);
   });
 
   test('parse RSS-Itunes_item_empty_field.xml with empty duration field', () {
-    var xmlString =
+    final xmlString =
         File('test/xml/RSS-Itunes_item_empty_field.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.itunes?.owner?.name, 'Changelog Media');
-    var item = feed.items![0];
+    final item = feed.items![0];
     expect(item.itunes?.episodeType, ItunesEpisodeType.full);
     expect(item.itunes?.duration, null);
     expect(item.itunes?.title, 'awesome title');
   });
 
   test('parse RSS-RDF.xml', () {
-    var xmlString = File('test/xml/RSS-RDF.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-RDF.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.title, 'Mozilla Dot Org');
     expect(feed.link, 'http://www.mozilla.org');
@@ -407,24 +411,27 @@ void main() {
   });
 
   test('parse RSS-Syndication.xml', () {
-    var xmlString = File('test/xml/RSS-Syndication.xml').readAsStringSync();
+    final xmlString = File('test/xml/RSS-Syndication.xml').readAsStringSync();
 
-    var feed = RssFeed.parse(xmlString);
+    final feed = RssFeed.parse(xmlString);
 
     expect(feed.title, 'Meerkat');
     expect(feed.link, 'http://meerkat.oreillynet.com');
     expect(feed.description, 'Meerkat: An Open Wire Service');
     expect(feed.image!.title, 'Meerkat Powered!');
     expect(feed.image!.url,
-        'http://meerkat.oreillynet.com/icons/meerkat-powered.jpg');
+        'http://meerkat.oreillynet.com/icons/meerkat-powered.jpg',);
     expect(feed.image!.link, 'http://meerkat.oreillynet.com');
     expect(feed.syndication!.updatePeriod, SyndicationUpdatePeriod.hourly);
     expect(feed.syndication!.updateFrequency, 2);
     expect(feed.syndication!.updateBase, DateTime.utc(2001, 1, 1, 12, 1));
     expect(feed.items!.length, 1);
     expect(feed.items!.first.title, 'XML: A Disruptive Technology');
-    expect(feed.items!.first.description,
-        'XML is placing increasingly heavy loads on the existing technical infrastructure of the Internet.');
+    expect(
+      feed.items!.first.description,
+      'XML is placing increasingly heavy loads on the existing technical '
+          'infrastructure of the Internet.',
+    );
     expect(feed.items!.first.link, 'http://c.moreover.com/click/here.pl?r123');
   });
 }

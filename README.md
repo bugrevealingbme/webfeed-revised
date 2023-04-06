@@ -1,9 +1,10 @@
-# WebFeed
+# WebFeed Revised
 
-[![Build Status](https://travis-ci.org/witochandra/webfeed.svg?branch=master)](https://travis-ci.org/witochandra/webfeed)
-[![Pub](https://img.shields.io/pub/v/webfeed.svg)](https://pub.dartlang.org/packages/webfeed)
+[![Pub](https://img.shields.io/pub/v/webfeed-revised.svg)](https://pub.dev/packages/webfeed-revised)
 
 A dart package for parsing RSS and Atom feed.
+
+Forked from [WebFeed - V0.7.0](https://pub.dev/packages/webfeed) and improved upon
 
 ### Features
 
@@ -19,12 +20,12 @@ A dart package for parsing RSS and Atom feed.
 
 Add this line into your `pubspec.yaml`
 ```
-webfeed: ^0.7.0
+webfeed-revised: ^0.7.1
 ```
 
 Import the package into your dart code using:
 ```
-import 'package:webfeed_revised/webfeed.dart';
+import 'package:webfeed_revised/webfeed_revised.dart';
 ```
 
 ### Example
@@ -109,4 +110,6 @@ item.media
 
 ## License
 
-WebFeed is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+WebFeed Revised is licensed under the BSD 3-clause License - see the [LICENSE](LICENSE) file for details
+
+WebFeed, from which this repository is forked, is licensed under the MIT License - see the [LICENSE-ORIGINAL](LICENSE-ORIGINAL) file for details

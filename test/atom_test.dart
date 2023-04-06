@@ -1,23 +1,27 @@
 import 'dart:core';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:test/test.dart';
-import 'package:webfeed_revised/webfeed.dart';
+import 'package:webfeed_revised/webfeed_revised.dart';
 
 void main() {
   test('parse Invalid.xml', () {
-    var xmlString = File('test/xml/Invalid.xml').readAsStringSync();
+    final xmlString = File('test/xml/Invalid.xml').readAsStringSync();
 
     try {
       AtomFeed.parse(xmlString);
       fail('Should throw Argument Error');
-    } on ArgumentError {}
+    } on Exception catch (e) {
+      log('Exception during AtomFeed parsing');
+      log(e.toString());
+    }
   });
 
   test('parse Atom.xml', () {
-    var xmlString = File('test/xml/Atom.xml').readAsStringSync();
+    final xmlString = File('test/xml/Atom.xml').readAsStringSync();
 
-    var feed = AtomFeed.parse(xmlString);
+    final feed = AtomFeed.parse(xmlString);
 
     expect(feed.id, 'foo-bar-id');
     expect(feed.title, 'Foo bar news');
@@ -55,7 +59,7 @@ void main() {
     expect(feed.subtitle, 'This is subtitle');
 
     expect(feed.items!.length, 2);
-    var item = feed.items!.first;
+    final item = feed.items!.first;
     expect(item.id, 'foo-bar-entry-id-1');
     expect(item.title, 'Foo bar item 1');
     expect(item.updated, DateTime.utc(2018, 4, 6, 13, 2, 40));
@@ -89,23 +93,23 @@ void main() {
     expect(item.rights, 'This is rights 1');
   });
   test('parse Atom-Media.xml', () {
-    var xmlString = File('test/xml/Atom-Media.xml').readAsStringSync();
+    final xmlString = File('test/xml/Atom-Media.xml').readAsStringSync();
 
-    var feed = AtomFeed.parse(xmlString);
+    final feed = AtomFeed.parse(xmlString);
     expect(feed.id, 'foo-bar-id');
     expect(feed.title, 'Foo bar news');
     expect(feed.updated, DateTime.utc(2018, 4, 6, 13, 2, 46));
 
     expect(feed.items!.length, 1);
 
-    var item = feed.items!.first;
+    final item = feed.items!.first;
     expect(item.media!.group!.contents!.length, 5);
     expect(item.media!.group!.credits!.length, 2);
     expect(item.media!.group!.category!.value, 'music/artist name/album/song');
     expect(item.media!.group!.rating!.value, 'nonadult');
 
     expect(item.media!.contents!.length, 2);
-    var mediaContent = item.media!.contents!.first;
+    final mediaContent = item.media!.contents!.first;
     expect(mediaContent.url, 'http://www.foo.com/video.mov');
     expect(mediaContent.type, 'video/quicktime');
     expect(mediaContent.fileSize, 2000);
@@ -118,13 +122,13 @@ void main() {
     expect(mediaContent.channels, 2);
 
     expect(item.media!.credits!.length, 2);
-    var mediaCredit = item.media!.credits!.first;
+    final mediaCredit = item.media!.credits!.first;
     expect(mediaCredit.role, 'owner1');
     expect(mediaCredit.scheme, 'urn:yvs');
     expect(mediaCredit.value, 'copyright holder of the entity');
 
     expect(item.media!.category!.scheme,
-        'http://search.yahoo.com/mrss/category_ schema');
+        'http://search.yahoo.com/mrss/category_ schema',);
     expect(item.media!.category!.label, 'Music');
     expect(item.media!.category!.value, 'music/artist/album/song');
 
@@ -136,12 +140,12 @@ void main() {
 
     expect(item.media!.description!.type, 'plain');
     expect(item.media!.description!.value,
-        'This was some really bizarre band I listened to as a young lad.');
+        'This was some really bizarre band I listened to as a young lad.',);
 
     expect(item.media!.keywords, 'kitty, cat, big dog, yarn, fluffy');
 
     expect(item.media!.thumbnails!.length, 2);
-    var mediaThumbnail = item.media!.thumbnails!.first;
+    final mediaThumbnail = item.media!.thumbnails!.first;
     expect(mediaThumbnail.url, 'http://www.foo.com/keyframe1.jpg');
     expect(mediaThumbnail.width, '75');
     expect(mediaThumbnail.height, '50');
@@ -187,7 +191,7 @@ void main() {
     expect(item.media!.embed!.params!.length, 5);
     expect(item.media!.embed!.params!.first.name, 'type');
     expect(item.media!.embed!.params!.first.value,
-        'application/x-shockwave-flash');
+        'application/x-shockwave-flash',);
 
     expect(item.media!.responses!.length, 2);
     expect(item.media!.responses!.first, 'http://www.response1.com');
@@ -204,7 +208,7 @@ void main() {
     expect(item.media!.prices!.first.price, 19.99);
     expect(item.media!.prices!.first.type, 'rent');
     expect(item.media!.prices!.first.info,
-        'http://www.dummy.jp/package_info.html');
+        'http://www.dummy.jp/package_info.html',);
     expect(item.media!.prices!.first.currency, 'EUR');
 
     expect(item.media!.license!.type, 'text/html');
@@ -225,9 +229,9 @@ void main() {
   });
 
   test('parse Atom-Empty.xml', () {
-    var xmlString = File('test/xml/Atom-Empty.xml').readAsStringSync();
+    final xmlString = File('test/xml/Atom-Empty.xml').readAsStringSync();
 
-    var feed = AtomFeed.parse(xmlString);
+    final feed = AtomFeed.parse(xmlString);
 
     expect(feed.id, null);
     expect(feed.title, null);
@@ -242,7 +246,7 @@ void main() {
     expect(feed.subtitle, null);
 
     expect(feed.items!.length, 1);
-    var item = feed.items!.first;
+    final item = feed.items!.first;
 
     expect(item.authors!.length, 0);
 
